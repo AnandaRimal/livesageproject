@@ -1,0 +1,232 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@source "../node_modules/streamdown/dist/index.js";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.75rem;
+
+  /* ── Light mode ── */
+  --background: oklch(0.98 0.005 260);
+  --foreground: oklch(0.12 0.02 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.02 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.02 260);
+  --primary: oklch(0.55 0.22 280);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.94 0.01 260);
+  --secondary-foreground: oklch(0.2 0.02 260);
+  --muted: oklch(0.94 0.01 260);
+  --muted-foreground: oklch(0.5 0.04 260);
+  --accent: oklch(0.55 0.22 280);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.88 0.01 260);
+  --input: oklch(0.88 0.01 260);
+  --ring: oklch(0.55 0.22 280);
+  --chart-1: oklch(0.55 0.22 280);
+  --chart-2: oklch(0.6 0.18 185);
+  --chart-3: oklch(0.45 0.15 225);
+  --chart-4: oklch(0.7 0.2 150);
+  --chart-5: oklch(0.65 0.22 320);
+  --sidebar: oklch(0.96 0.005 260);
+  --sidebar-foreground: oklch(0.12 0.02 260);
+  --sidebar-primary: oklch(0.55 0.22 280);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.94 0.01 260);
+  --sidebar-accent-foreground: oklch(0.2 0.02 260);
+  --sidebar-border: oklch(0.88 0.01 260);
+  --sidebar-ring: oklch(0.55 0.22 280);
+
+  /* ── Glass ── */
+  --glass-bg: oklch(1 0 0 / 60%);
+  --glass-border: oklch(0.88 0.01 260 / 60%);
+  --neon-violet: #7c3aed;
+  --neon-cyan: #06b6d4;
+  --neon-glow: oklch(0.55 0.22 280 / 30%);
+}
+
+.dark {
+  /* ── Deep space dark palette ── */
+  --background: oklch(0.08 0.015 260);
+  --foreground: oklch(0.94 0.01 260);
+  --card: oklch(0.12 0.02 260);
+  --card-foreground: oklch(0.94 0.01 260);
+  --popover: oklch(0.14 0.02 265);
+  --popover-foreground: oklch(0.94 0.01 260);
+  --primary: oklch(0.68 0.22 285);
+  --primary-foreground: oklch(0.08 0.015 260);
+  --secondary: oklch(0.16 0.025 260);
+  --secondary-foreground: oklch(0.85 0.01 260);
+  --muted: oklch(0.16 0.025 260);
+  --muted-foreground: oklch(0.55 0.04 265);
+  --accent: oklch(0.68 0.22 285);
+  --accent-foreground: oklch(0.08 0.015 260);
+  --destructive: oklch(0.65 0.22 25);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.68 0.22 285);
+  --chart-1: oklch(0.68 0.22 285);
+  --chart-2: oklch(0.65 0.2 185);
+  --chart-3: oklch(0.72 0.18 150);
+  --chart-4: oklch(0.6 0.24 320);
+  --chart-5: oklch(0.55 0.22 25);
+  --sidebar: oklch(0.1 0.02 260);
+  --sidebar-foreground: oklch(0.94 0.01 260);
+  --sidebar-primary: oklch(0.68 0.22 285);
+  --sidebar-primary-foreground: oklch(0.08 0.015 260);
+  --sidebar-accent: oklch(0.16 0.025 260);
+  --sidebar-accent-foreground: oklch(0.85 0.01 260);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.68 0.22 285);
+
+  /* ── Glass ── */
+  --glass-bg: oklch(0.14 0.02 265 / 70%);
+  --glass-border: oklch(1 0 0 / 10%);
+  --neon-violet: #a78bfa;
+  --neon-cyan: #22d3ee;
+  --neon-glow: oklch(0.68 0.22 285 / 35%);
+}
+
+@theme inline {
+  --font-sans:
+    var(--font-public-sans), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    var(--font-commit-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* ── Animations ── */
+@keyframes orb-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(60px, -80px) scale(1.15);
+  }
+  66% {
+    transform: translate(-40px, 50px) scale(0.9);
+  }
+}
+
+@keyframes orb-float-2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-70px, 60px) scale(1.1);
+  }
+  66% {
+    transform: translate(50px, -50px) scale(0.92);
+  }
+}
+
+@keyframes shimmer-slide {
+  from {
+    background-position: -200% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes pulse-neon {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px var(--neon-glow),
+      0 0 20px var(--neon-glow);
+  }
+  50% {
+    box-shadow:
+      0 0 20px var(--neon-glow),
+      0 0 45px var(--neon-glow);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Utility classes ── */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+
+.neon-glow-border {
+  border: 1px solid oklch(0.68 0.22 285 / 40%);
+  box-shadow:
+    0 0 0 1px oklch(0.68 0.22 285 / 15%),
+    inset 0 0 30px oklch(0.68 0.22 285 / 5%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--neon-violet), var(--neon-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease both;
+}
+
+.animate-pulse-neon {
+  animation: pulse-neon 2.5s ease-in-out infinite;
+}
+
+@layer base {
+  * {
+    @apply border-foreground/10 outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
