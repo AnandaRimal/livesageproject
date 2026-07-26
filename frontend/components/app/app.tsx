@@ -64,7 +64,7 @@ export const AGENTS: AgentDefinition[] = [
     themeColor: '#ef4444',
     badgeColor: 'bg-red-600/30 text-red-400',
     glowColor: 'from-red-600/30 via-red-600/10 to-transparent',
-    agentName: 'livesearch-agent',
+    agentName: 'health-agent',
     visualizerType: 'radial',
   },
   {

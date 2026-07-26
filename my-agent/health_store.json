@@ -1,0 +1,14 @@
+{
+    "profile": {
+        "age": null,
+        "sex": null
+    },
+    "symptom_history": [
+        {
+            "text": "headache and 100 degree fever after being outside",
+            "age": 20,
+            "sex": "male"
+        }
+    ],
+    "saved_conditions": []
+}
