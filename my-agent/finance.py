@@ -1836,7 +1836,7 @@ class FinanceAgent(Agent):
         self._room = room
         super().__init__(
             llm=google.realtime.RealtimeModel(
-                model="gemini-2.5-flash-native-audio-preview-12-2025",
+                model="gemini-2.0-flash-realtime-exp",
                 voice="Charon",
             ),
             instructions=textwrap.dedent(
@@ -2061,20 +2061,8 @@ async def run_finance_session(ctx: agents.JobContext):
     # Connect to the room (Satisfies FFI handshake)
     await ctx.connect()
 
-    # Greet user
-    async def greet():
-        await asyncio.sleep(2.5)
-        try:
-            await session.generate_reply(
-                instructions="Say exactly: 'hello aananda ka xa khabar aaja stock ko news chaiyo ki crypto ko barema chaiyo ani sachi timlai ipo paryo ki parena'"
-            )
-        except RuntimeError as e:
-            logger.warning("Greeting skipped (session not ready): %s", e)
-
-    background_tasks = set()
-    t = asyncio.create_task(greet())
-    background_tasks.add(t)
-    t.add_done_callback(background_tasks.discard)
+    # Note: session.generate_reply is not supported by google.realtime.RealtimeModel
+    # (gemini-3.1-flash-live-preview). Greeting instruction is included in agent system instructions.
 
     # Keep handler alive until user disconnects
     disconnect_event = asyncio.Event()

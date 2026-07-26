@@ -103,7 +103,7 @@ export function TileLayout({
     source: t.source,
     isSubscribed: t.publication?.isSubscribed,
     trackName: t.publication?.trackName,
-    track: t.track ? 'exists' : 'null'
+    track: t.publication ? 'exists' : 'null'
   })));
 
   const agentVideoTrack = useMemo(() => {

@@ -77,7 +77,7 @@ export const AGENTS: AgentDefinition[] = [
     themeColor: '#8b5cf6',
     badgeColor: 'bg-violet-600/30 text-violet-400',
     glowColor: 'from-violet-600/30 via-violet-600/10 to-transparent',
-    agentName: 'livesearch-agent',
+    agentName: 'ai-tutor-agent',
     visualizerType: 'aura',
   },
 ];
@@ -122,6 +122,7 @@ interface AppProps {
 export function App({ appConfig }: AppProps) {
   const [selectedAgent, setSelectedAgent] = useState<AgentDefinition | null>(null);
   const selectedAgentRef = useRef<AgentDefinition | null>(null);
+  const tutorSessionIdRef = useRef<string | null>(null);
 
   // tokenSource reads selectedAgentRef.current at call-time (inside the async callback),
   // so the ref is always up-to-date even though useMemo only runs once.
@@ -136,7 +137,7 @@ export function App({ appConfig }: AppProps) {
         const agentId = activeAgent?.id || 'search';
         const agentName = activeAgent?.agentName || appConfig.agentName;
 
-        console.log('[token] fetching token for agent:', agentId, 'name:', agentName);
+        console.log('[token] fetching token for agent:', agentId, 'name:', agentName, 'tutorSessionId:', tutorSessionIdRef.current);
 
         const res = await fetch('/api/token', {
           method: 'POST',
@@ -148,6 +149,7 @@ export function App({ appConfig }: AppProps) {
             // This is embedded in participant metadata and read by the backend
             // to dynamically route between LiveSearchAgent (Neha) and FinanceAgent
             selectedAgent: agentId,
+            tutorSessionId: tutorSessionIdRef.current,
           }),
         });
         return await res.json();
@@ -170,8 +172,11 @@ export function App({ appConfig }: AppProps) {
         : undefined
   );
 
-  const handleStartCallWithAgent = (agent: AgentDefinition, startFn: () => void) => {
+  const handleStartCallWithAgent = (agent: AgentDefinition, startFn: () => void, sessionId?: string) => {
     selectedAgentRef.current = agent;
+    if (sessionId) {
+      tutorSessionIdRef.current = sessionId;
+    }
     setSelectedAgent(agent);
     // Add a small micro-task delay to ensure state and refs are aligned
     setTimeout(() => {
@@ -186,7 +191,7 @@ export function App({ appConfig }: AppProps) {
         <ViewController
           appConfig={appConfig}
           selectedAgent={selectedAgent}
-          onSelectAgent={(agent, startFn) => handleStartCallWithAgent(agent, startFn)}
+          onSelectAgent={(agent, startFn, sessionId) => handleStartCallWithAgent(agent, startFn, sessionId)}
         />
       </main>
       <StartAudioButton label="Start Audio" />

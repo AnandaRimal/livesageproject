@@ -1,14 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import { AnimatePresence, motion } from 'motion/react';
 import { useSessionContext } from '@livekit/components-react';
 import type { AppConfig } from '@/app-config';
 import { AgentSessionView_01 } from '@/components/agents-ui/blocks/agent-session-view-01';
 import { WelcomeView } from '@/components/app/welcome-view';
+import { AiTutorUploadView } from '@/components/app/ai-tutor-upload-view';
 import type { AgentDefinition } from './app';
 
 const MotionWelcomeView = motion.create(WelcomeView);
+const MotionTutorUploadView = motion.create(AiTutorUploadView);
 const MotionSessionView = motion.create(AgentSessionView_01);
 
 const VIEW_MOTION_PROPS = {
@@ -32,25 +35,52 @@ const VIEW_MOTION_PROPS = {
 interface ViewControllerProps {
   appConfig: AppConfig;
   selectedAgent: AgentDefinition | null;
-  onSelectAgent: (agent: AgentDefinition, startFn: () => void) => void;
+  onSelectAgent: (agent: AgentDefinition, startFn: () => void, sessionId?: string) => void;
 }
 
 export function ViewController({ appConfig, selectedAgent, onSelectAgent }: ViewControllerProps) {
   const { isConnected, start } = useSessionContext();
   const { resolvedTheme } = useTheme();
+  const [activeUploadAgent, setActiveUploadAgent] = useState<AgentDefinition | null>(null);
+
+  // If user selected AI Tutor and room is not connected, show PDF upload view
+  const isTutorUploadMode = !isConnected && (selectedAgent?.id === 'tutor' || activeUploadAgent?.id === 'tutor');
+
+  const handleSelectAgent = (agent: AgentDefinition) => {
+    if (agent.id === 'tutor') {
+      setActiveUploadAgent(agent);
+    } else {
+      setActiveUploadAgent(null);
+      onSelectAgent(agent, start);
+    }
+  };
 
   return (
     <AnimatePresence mode="wait">
       {/* Welcome view */}
-      {!isConnected && (
+      {!isConnected && !isTutorUploadMode && (
         <MotionWelcomeView
           key="welcome"
           {...VIEW_MOTION_PROPS}
           startButtonText={appConfig.startButtonText}
           onStartCall={start}
-          onSelectAgent={(agent) => onSelectAgent(agent, start)}
+          onSelectAgent={handleSelectAgent}
         />
       )}
+
+      {/* AI Tutor Upload & Setup view */}
+      {!isConnected && isTutorUploadMode && (
+        <MotionTutorUploadView
+          key="tutor-upload"
+          {...VIEW_MOTION_PROPS}
+          onBack={() => setActiveUploadAgent(null)}
+          onJoinClassroom={(sessionId) => {
+            const tutorAgent = activeUploadAgent || selectedAgent!;
+            onSelectAgent(tutorAgent, start, sessionId);
+          }}
+        />
+      )}
+
       {/* Session view */}
       {isConnected && (
         <MotionSessionView
