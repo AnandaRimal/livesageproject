@@ -145,6 +145,12 @@ class DirectEmbeddingFunction:
         return [[0.0] for _ in input]
 
 
+def _clean_pdf_name(name: str) -> str:
+    if not name:
+        return "PDF Document"
+    return re.sub(r"^session_[^_\s]+_", "", name)
+
+
 def process_pdf(pdf_path: str, session_id: str) -> dict:
     """
     Full PDF processing pipeline.
@@ -264,7 +270,7 @@ def process_pdf(pdf_path: str, session_id: str) -> dict:
 
     session_meta = {
         "session_id": session_id,
-        "pdf_name": pdf_path_obj.name,
+        "pdf_name": _clean_pdf_name(pdf_path_obj.name),
         "total_pages": total_pages,
         "total_chunks": len(chunks),
         "collection_name": collection_name,
@@ -420,8 +426,9 @@ class AiTutorAgent(Agent):
 
     Teaching strategy (driven entirely from Python):
     1. PDF pages published to frontend immediately.
-    2. For each chunk: publish page → ask model to explain chunk text → wait → next.
+    2. For each chunk: publish page → wait for page_ready ACK → ask model to explain → wait → next.
     3. No manual tool calls — Python controls pacing 100%.
+    4. All teaching is delivered in Nepali language.
     """
 
     def __init__(self, room, session_id: str):
@@ -429,6 +436,8 @@ class AiTutorAgent(Agent):
         self._session_id = session_id
         self._chunks: list[dict] = []
         self._idx = 0
+        # Event set by the data-channel listener when frontend sends page_ready
+        self._page_ready_event = asyncio.Event()
 
         model_name = os.getenv("AI_TUTOR_MODEL", "gemini-2.5-flash-native-audio-preview-12-2025")
         super().__init__(
@@ -437,12 +446,13 @@ class AiTutorAgent(Agent):
                 voice="Puck",
             ),
             instructions=textwrap.dedent("""\
-                You are Professor Sage, a clear and engaging AI professor.
-                You explain material from a PDF textbook step by step.
-                Always speak in a warm, natural teaching voice.
-                When given RAW SOURCE TEXT, explain it in simple language — do NOT read it word-for-word.
-                Use real-world analogies. Keep each explanation focused and clear.
-                After each section, say briefly: "Let's move to the next part." then stop.
+                तपाईं Professor Sage हुनुहुन्छ — एक स्पष्ट, उत्साहजनक र मैत्रीपूर्ण AI प्राध्यापक।
+                तपाईं PDF पाठ्यपुस्तकको सामग्री चरण-दर-चरण पढाउनुहुन्छ।
+                सधैं नेपाली भाषामा बोल्नुहोस् — अन्य कुनै भाषा प्रयोग नगर्नुहोस्।
+                जब RAW SOURCE TEXT दिइन्छ, त्यसलाई शब्दसहित नपढ्नुहोस् —
+                सरल, स्पष्ट नेपालीमा मुख्य विचारहरू व्याख्या गर्नुहोस्।
+                जहाँ उपयुक्त हुन्छ, वास्तविक जीवनका उदाहरणहरू र उपमाहरू प्रयोग गर्नुहोस्।
+                प्रत्येक खण्डको अन्तमा भन्नुहोस्: "अब अर्को भागमा जाऔं।" त्यसपछि रोक्नुहोस्।
             """),
         )
 
@@ -512,24 +522,13 @@ async def run_ai_tutor_session(ctx: agents.JobContext):
     agent = AiTutorAgent(room=room, session_id=session_id or "unknown")
     agent._chunks = chunks
 
-    # ── Start Bey avatar (optional) ───────────────────────────────────────────
-    session = AgentSession()
-    avatar_id = os.getenv("AI_TUTOR_AVATAR_ID") or os.getenv("BEY_AVATAR_ID")
-    if BEY_AVAILABLE and avatar_id:
-        try:
-            avatar = bey.AvatarSession(avatar_id=avatar_id)
-            await avatar.start(session, room=room)
-            logger.info("[AiTutor] Bey avatar attached.")
-        except Exception as exc:
-            logger.error("[AiTutor] Bey avatar failed: %s", exc)
-
-    # ── Connect room ──────────────────────────────────────────────────────────
+    # ── Connect room first ────────────────────────────────────────────────────
     await ctx.connect()
     logger.info("[AiTutor] Room connected.")
 
     # ── Build all-pages list from chunks + filesystem ─────────────────────────
     all_pages = _collect_all_pages(chunks, session_id)
-    pdf_name  = session_meta.get("pdf_name", "your document") if session_meta else "your document"
+    pdf_name  = _clean_pdf_name(session_meta.get("pdf_name", "your document")) if session_meta else "your document"
 
     # ── Immediately publish full PDF to frontend ───────────────────────────────
     if all_pages:
@@ -556,16 +555,50 @@ async def run_ai_tutor_session(ctx: agents.JobContext):
             "text": f"Ready to teach: {pdf_name}",
         })
 
-    # ── Start AgentSession (output-only — no mic input) ─────────────────────
+    # ── Start AgentSession ───────────────────────────────────────────────────
+    session = AgentSession()
     try:
         await session.start(
             agent=agent,
             room=ctx.room,
         )
-        logger.info("[AiTutor] AgentSession started (output-only mode).")
+        logger.info("[AiTutor] AgentSession started.")
     except Exception as exc:
         logger.error("[AiTutor] Failed to start session: %s", exc)
         return
+
+    # ── Start Bey avatar AFTER session start to enable proper audio lip-sync ──
+    avatar_id = os.getenv("AI_TUTOR_AVATAR_ID") or os.getenv("BEY_AVATAR_ID")
+    if BEY_AVAILABLE and avatar_id:
+        try:
+            avatar = bey.AvatarSession(avatar_id=avatar_id)
+            await avatar.start(session, room=ctx.room)
+            logger.info("[AiTutor] Bey avatar attached & lipsync active.")
+        except Exception as exc:
+            logger.error("[AiTutor] Bey avatar failed: %s", exc)
+
+    # ── Listen for page_ready ACK from frontend ───────────────────────────────
+    page_ready_event = asyncio.Event()
+
+    @ctx.room.on("data_received")
+    def on_data_received(data_packet):
+        """Frontend sends {type: 'page_ready'} when the slide image finishes loading."""
+        try:
+            payload = json.loads(data_packet.data.decode("utf-8"))
+            if payload.get("type") == "page_ready":
+                logger.info("[AiTutor] page_ready ACK received from frontend.")
+                page_ready_event.set()
+        except Exception:
+            pass
+
+    async def _wait_page_ready(timeout: float = 8.0) -> None:
+        """Wait for frontend page_ready signal, or fall back after timeout."""
+        page_ready_event.clear()
+        try:
+            await asyncio.wait_for(page_ready_event.wait(), timeout=timeout)
+            logger.info("[AiTutor] Page confirmed ready by frontend.")
+        except asyncio.TimeoutError:
+            logger.info("[AiTutor] page_ready timeout — proceeding anyway.")
 
     # ── Teaching loop (runs once session is live) ─────────────────────────────
     async def teach_all_chunks():
@@ -597,30 +630,40 @@ async def run_ai_tutor_session(ctx: agents.JobContext):
         first_page_num   = first_chunk.get("page_num", 1)
         first_page_image = first_chunk.get("page_image")
 
+        # Tell frontend to load page 1 and wait for it to be ready
+        await _publish(room, {
+            "type": "tutor_page_loading",
+            "pageNum": first_page_num,
+            "pageImage": first_page_image,
+        })
+        await _wait_page_ready(timeout=8.0)
+
         # Show page 1 on frontend while greeting
         await _publish(room, {
             "type": "tutor_whiteboard",
             "status": "greeting",
-            "lessonTitle": first_chunk.get("chapter_title") or "Introduction",
+            "lessonTitle": first_chunk.get("chapter_title") or "परिचय",
             "chunkIndex": 0,
             "totalChunks": total,
             "pageNum": first_page_num,
             "pageImage": first_page_image,
-            "text": f"Welcome! Today we're studying: {pdf_name}",
+            "text": f"नमस्ते! म नेपाल इन्जिनियरिङ कलेजको AI Tutor हुँ।",
         })
 
+        spoken_title = re.sub(r"\.pdf$", "", _clean_pdf_name(pdf_name), flags=re.IGNORECASE).replace("_", " ")
+
         greeting_instruction = textwrap.dedent(f"""\
-            Warmly greet the students. Introduce yourself as Professor Sage.
-            Tell them today's topic is "{pdf_name}" and that you will walk them
-            through it page by page. Say something encouraging like
-            "Let's get started — I'll explain each part clearly and simply."
-            Keep your greeting under 20 seconds. Do not start teaching yet.
+            तपाईंले विद्यार्थीहरूलाई ठ्याक्कै यो भनाइअनुसार न्यानो तरिकाले नेपालीमा स्वागत गर्नुपर्छ:
+            "नमस्ते! म नेपाल इन्जिनियरिङ कलेजको AI Tutor हुँ। आज AI को सर नआउनुभएको कारणले म तपाईंहरूलाई पढाउन आउँदैछु। आज हामी Bachelor of Computer Engineering को AI subject पढ्न जाँदैछौँ, be ready hai! सबै विद्यार्थीहरू कापी र कलम लिएर तयार हुनुहोस्, म सबै पढाउँछु। अनि १० मिनेटपछि हाम्रो Q&A हुन्छ है, त्यसैले सबैले हल्ला नगरी राम्ररी सुन्नुहोस् है!"
+
+            यसपछि भन्नुहोस्: "ठीक छ, सुरु गरौँ!"
+            अहिले यति मात्र भन्नुहोस्।
         """)
 
         for attempt in range(1, 9):
             try:
                 await session.generate_reply(instructions=greeting_instruction)
-                logger.info("[AiTutor] Greeting delivered.")
+                logger.info("[AiTutor] Greeting delivered (Nepali).")
                 break
             except Exception as err:
                 backoff = min(2 ** (attempt - 1), 16)  # 1, 2, 4, 8, 16s cap
@@ -636,7 +679,7 @@ async def run_ai_tutor_session(ctx: agents.JobContext):
             chunk_num  = idx + 1
             page_num   = chunk.get("page_num", 1)
             page_image = chunk.get("page_image")
-            title      = chunk.get("chapter_title") or f"Section {chunk_num}"
+            title      = chunk.get("chapter_title") or f"खण्ड {chunk_num}"
             text       = chunk["text"]
 
             # Trim to ~250 tokens (~1500 chars) for concise voice teaching
@@ -644,7 +687,17 @@ async def run_ai_tutor_session(ctx: agents.JobContext):
 
             logger.info("[AiTutor] Teaching chunk %d/%d — page %d", chunk_num, total, page_num)
 
-            # 1. Switch frontend to this page BEFORE the teacher starts speaking
+            # 1. Signal frontend to load this page image and WAIT until it confirms loaded
+            await _publish(room, {
+                "type": "tutor_page_loading",
+                "pageNum": page_num,
+                "pageImage": page_image,
+                "chunkIndex": chunk_num,
+                "totalChunks": total,
+            })
+            await _wait_page_ready(timeout=8.0)
+
+            # 2. Switch frontend to this page AFTER image is confirmed loaded
             await _publish(room, {
                 "type": "tutor_whiteboard",
                 "status": "teaching",
@@ -658,25 +711,26 @@ async def run_ai_tutor_session(ctx: agents.JobContext):
                 "hasImages": bool(chunk.get("image_paths")),
             })
 
-            # 2. Ask the model to explain this chunk (250-token voice text)
+            # 3. Ask the model to explain this chunk in Nepali
             instruction = textwrap.dedent(f"""\
-                ===== PAGE {page_num} — SECTION {chunk_num} of {total} =====
-                Topic: {title}
+                ===== पृष्ठ {page_num} — खण्ड {chunk_num} / {total} =====
+                विषय: {title}
 
-                SOURCE TEXT (read silently — do NOT read word-for-word):
+                स्रोत पाठ (मनमनै पढ्नुहोस् — शब्द-दर-शब्द नपढ्नुहोस्):
                 {voice_text}
 
-                YOUR TASK:
-                - Explain the key ideas from this text in clear, engaging language.
-                - Use a real-world analogy where helpful.
-                - Keep your explanation concise (about 45–90 seconds of speech).
-                - End by saying: "Let's move to the next part." then stop.
+                तपाईंको कार्य:
+                - यस पाठका मुख्य विचारहरू नेपाली भाषामा स्पष्ट र रोचक तरिकाले व्याख्या गर्नुहोस्।
+                - जहाँ उपयुक्त हुन्छ, वास्तविक जीवनका उदाहरण प्रयोग गर्नुहोस्।
+                - व्याख्या संक्षिप्त राख्नुहोस् (लगभग ४५–९० सेकेन्डको बोली)।
+                - अन्तमा भन्नुहोस्: "अब अर्को भागमा जाऔं।" त्यसपछि रोक्नुहोस्।
+                - सम्पूर्ण व्याख्या नेपाली भाषामा गर्नुहोस्।
             """)
 
             for attempt in range(1, 9):
                 try:
                     await session.generate_reply(instructions=instruction)
-                    logger.info("[AiTutor] Chunk %d/%d reply started.", chunk_num, total)
+                    logger.info("[AiTutor] Chunk %d/%d reply started (Nepali).", chunk_num, total)
                     break
                 except Exception as err:
                     backoff = min(2 ** (attempt - 1), 16)  # 1, 2, 4, 8, 16s cap
@@ -687,7 +741,7 @@ async def run_ai_tutor_session(ctx: agents.JobContext):
                     if attempt < 8:
                         await asyncio.sleep(backoff)
 
-            # 3. Wait until speaking finishes, then move to next chunk
+            # 4. Wait until speaking finishes, then move to next chunk
             await _wait_idle(session, max_wait=120)
             await asyncio.sleep(1.5)
 
@@ -696,16 +750,19 @@ async def run_ai_tutor_session(ctx: agents.JobContext):
         await _publish(room, {
             "type": "tutor_whiteboard",
             "status": "complete",
-            "lessonTitle": "Lesson Complete!",
+            "lessonTitle": "पाठ सम्पन्न!",
             "chunkIndex": total,
             "totalChunks": total,
             "pageNum": chunks[-1].get("page_num", 1) if chunks else 1,
-            "text": "The lesson is complete. Well done!",
+            "text": "पाठ सम्पन्न भयो। धन्यवाद!",
         })
         try:
             await session.generate_reply(
-                instructions='Say warmly: "Excellent work! You have now covered the entire document. '
-                             'I hope that was helpful. Goodbye, and keep up the great learning!"'
+                instructions=(
+                    'नेपाली भाषामा न्यानो तरिकाले भन्नुहोस्: '
+                    '"उत्कृष्ट कार्य! तपाईंले सम्पूर्ण कागजात कभर गर्नुभयो। '
+                    'आशा छ यो उपयोगी भयो। बिदाइ, र सिकाइमा जारी राख्नुहोस्!"'
+                )
             )
         except Exception:
             pass

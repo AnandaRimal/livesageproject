@@ -1,0 +1,492 @@
+{
+  "session_id": "session_1785051840023_or1qq",
+  "pdf_name": "session_1785051840023_or1qq_Complete_AINN_Notes_NCIT-1-30.pdf",
+  "total_pages": 30,
+  "total_chunks": 30,
+  "collection_name": "tutor_session_1785051840023_or1qq",
+  "created_at": 1785051849.8734863,
+  "chunks": [
+    {
+      "id": "chunk_0000",
+      "text": "Artificial Intelligence Chapter I: Introduction to AI",
+      "page_num": 1,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_1.png"
+    },
+    {
+      "id": "chunk_0001",
+      "text": "Outline \u2022 Overview \u2022 Definition of AI \u2022 AI and Related Fields \u2022 Brief History of AI \u2022 Applications of AI \u2022 Importance of AI \u2022 Definition of Knowledge and Learning \u2022 Importance of Knowledge and Learning",
+      "page_num": 2,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_2.png"
+    },
+    {
+      "id": "chunk_0002",
+      "text": "Overview- Background \u2022 Humans and Mental Capacities \u2022 How we Think? \uf096How we Perceive, Understand, Predict and Manipulate a large and complicated world? \u2022 Understand Intelligent Entities \u2022 Build Intelligent Entities",
+      "page_num": 3,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_3.png"
+    },
+    {
+      "id": "chunk_0003",
+      "text": "Overview- AI and Its Subfields \u2022 General Purpose Areas \uf096Learning \uf096Perception \uf096Natural Language Processing \uf096Common-sense Reasoning \uf096Robot Control \u2022 Specific Tasks \uf096Games (Chess, Backgammon, Cards, Checkers, Tic-Tac-Toe) \uf096Mathematical Theorems (Geometry, Calculus, Logic, Proving properties) \uf096Scientific Analysis \uf096Medical Analysis \uf096Financial Analysis \uf096Writing Literatures (Poems) AI systemizes and automates intellectual tasks.",
+      "page_num": 4,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_4.png"
+    },
+    {
+      "id": "chunk_0004",
+      "text": "Definition of AI- What is AI? \u2022 A thought process \u2022 Reasoning \u2022 Fidelity to Human Performance \u2022 Rationality (doing right thing)",
+      "page_num": 5,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_5.png"
+    },
+    {
+      "id": "chunk_0005",
+      "text": "Definition of AI- Approaches to AI \u2022 Act Humanly: Turing Test Approach \u2022 Think Humanly: Cognitive Modelling Approach \u2022 Think Rationally: The \u201cLaws of Thought\u201d Approach \u2022 Act Rationally: The Rational Agent Approach",
+      "page_num": 6,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_6.png"
+    },
+    {
+      "id": "chunk_0006",
+      "text": "Act Humanly: Turing Test Approach \u2022 The art of creating machines that perform functions that require intelligence when performed by people.(Kurzwail, 1990) \u2022 The study of how to make computers do things at which, at the moment, people are better.(Rich and Knight, 1991) \u2022 Based on Turing Test (Alan Turing, 1950) \uf096Test based on indistinguishability from undeniably intelligent entities (human). \uf096The computer passes a test if a human interrogator, after posing some written questions, can\u2019t tell whether the responses were made by a human or not.",
+      "page_num": 7,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_7.png"
+    },
+    {
+      "id": "chunk_0007",
+      "text": "Act Humanly: Turing Test Approach \u2022 Capabilities need of the computer for the tests: \uf096Natural Language Processing (ability to communicate successfully) \uf096Knowledge Representation (store what it knows or hears) \uf096Automated Reasoning (use the stored information to answer questions and draw new conclusions) \uf096Machine Learning (adapt to new circumstances and to detect and extrapolate patterns) \u2022 And \uf096Computer Vision (to perceive objects) \uf096Robotics (to manipulate objects and move about)",
+      "page_num": 8,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_8.png"
+    },
+    {
+      "id": "chunk_0008",
+      "text": "Think Humanly: Cognitive Modelling Approach \u2022 The exciting new effort to make computers think\u2026 machines with minds, in the full and literal sense. (Haugeland, 1985) \u2022 \u201cThe automation of activities that we associate with human thinking, activities such as decision-making, problem solving, learning\u2026\u201d(Bellman, 1978) \u2022 Based on Cognitive Science \uf096Cognitive science brings together compute models from AI and experimental techniques from psychology to try to construct precise and testable theories of the workings of the human mind. \uf096Needs understanding of how human thinks? \uf096Example: General Problem Solver-GPS",
+      "page_num": 9,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_9.png"
+    },
+    {
+      "id": "chunk_0009",
+      "text": "Think Rationally: The Laws of Thought Approach \u2022 The study of mental faculties through the use of computational models. (Charniak and McDermott, 1985) \u2022 The study of the computations that make it possible to perceive, reason and act. (Winston, 1992) \u2022 Based on Rational Thinking (Right Thinking) \uf096Irrefutable Reasoning Process \uf096Syllogisms providing patterns for argument structures that always yielded correct conclusions \uf096Logic: the Laws of thought \uf096Logicist tradition within AI hopes to build on such programs to create intelligent systems",
+      "page_num": 10,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_10.png"
+    },
+    {
+      "id": "chunk_0010",
+      "text": "Act Rationally: The Rational Agent Approach \u2022 Computational Intelligence is the study of the design of intelligent agents. (Poole et al., 1998) \u2022 AI\u2026 is concerned with intelligent behaviour in artifacts. (Nilsson, 1998) \u2022 Based on Intelligent Agents \uf096Agents are the things that act. Computer agents are expected to have other attributes that distinguish them from mere \u201cprograms\u201d, such as operating under autonomous control, perceiving their environment, persisting over a prolonged time period, adapting to change, and being capable of taking on another\u2019s goals. \uf096Rational agents are those who act so as to achieve the best outcome or, the best expected outcome when there is uncertainty.",
+      "page_num": 11,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_11.png"
+    },
+    {
+      "id": "chunk_0011",
+      "text": "AI and Related Fields- The Foundations of AI \u2022 Philosophy (428 B.C. \u2013 Present) \uf096Drawing conclusions from the rules \uf096Mental mind and physical brain \uf096Where does knowledge come from? \uf096How does knowledge lead to action? \uf096Dualism, Materialism, Empiricism, Induction, Logical Positivism, Confirmation Theory \u2022 Mathematics (800 A.D. \u2013 Present) \uf096What are the formal rules to draw conclusions? \uf096What can be computed or manipulated? \uf096How do we reason with uncertain information? \uf096Algorithms, NP Completeness, Probability, Incompleteness Theorem, Intractability",
+      "page_num": 12,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_12.png"
+    },
+    {
+      "id": "chunk_0012",
+      "text": "AI and Related Fields- The Foundations of AI \u2022 Economics (1776 A.D. \u2013 Present) \uf096How decisions can be made to maximize payoff? \uf096How can something be done when others may not go along? \uf096How can this be done when payoff may be far in future? \uf096Decision Theory, Game Theory, Operations Research, Satisficing \u2022 Neuroscience (1861 A.D. \u2013 Present) \uf096How are information processed by the human brain? \uf096Neurons \u2022 Psychology (1879 A.D. \u2013 Present) \uf096How do humans and animals think and act? \uf096Behaviourism, Cognitive Psychology, Cognitive Science",
+      "page_num": 13,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_13.png"
+    },
+    {
+      "id": "chunk_0013",
+      "text": "AI and Related Fields- The Foundations of AI \u2022 Computer Engineering (1940 A.D. \u2013 Present) \uf096How can we build an efficient computer? \u2022 Control theory and Cybernetics (1948 A. D. \u2013 Present) \uf096How can artifacts operated under their own control? \uf096Control Theory, Cybernetics, Objective Function \u2022 Linguistics (1957 A.D. \u2013 Present) \uf096How does language relate to thought? \uf096Computational Linguistics, NLP, Knowledge Representation",
+      "page_num": 14,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_14.png"
+    },
+    {
+      "id": "chunk_0014",
+      "text": "Brief History of AI- The Gestation Period (1943-1955) \u2022 Warren McCulloch and Walter Pitts (1943): 3 Sources (Knowledge of basic physiology and functions of neurons in brain; a formal analysis of propositional logic due to Russell and Whitehead; Turing\u2019s theory of computation \uf0e0 proposed model of artificial neurons characterized by on/off logic that could even learn \u2022 Hebbian Learning (1949) by Donald Hebb: demonstration of simple updating rule for modification of the connections strengths between the neurons \u2022 Marvin Minsky and Dean Edmonds (1951): first neural network computer \uf0e0 SNARC (3000 Vacuum Tubes and a pilot mechanism from B-24 bomber to simulate a network of 40 neurons <Von Neumann> \u2022 Alan Turing (1950): \u201cComputing Machinery and Intelligence\u201d (Articulated a complete vision of AI, introducing Turing Test, Machine Learning, Genetic Algorithms, Reinforcement Learning)",
+      "page_num": 15,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_15.png"
+    },
+    {
+      "id": "chunk_0015",
+      "text": "Brief History of AI- The Birth (1956) \u2022 John McCarthy, Marvin Minsky, Claude Shannon and Nathaniel Rochester focused researches on automata theory, neural nets, and intelligence organizing a 2-month workshop (1956) \u2022 Two participants Allen Newell and Herbert Simon presented works on reasoning program named the Logic Theorist that was claimed to think non numerically and prove many theorems but the paper was not recognized by the Journal of Symbolic Logic \u2022 But the workshop laid the foundation for AI and the participants of the workshop became the leaders in the field of Artificial Intelligence",
+      "page_num": 16,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_16.png"
+    },
+    {
+      "id": "chunk_0016",
+      "text": "Brief History of AI: The Early Period (1952-1969) \u2022 General Problem Solver \u2013 Thinking Humanly Purpose \u2022 Nathaniel Rochester in IBM came with some of the first AI Programs \u2022 Herbert Gelernter (1959) \u2013 Geometry Theorem Prover \u2022 Arthur Samuel (1952) \u2013 Series of Programs for checkers leading to skilled checker program that could play better than its creator \u2022 John McCarthy (1958) \u2013 Contributions \uf096Lisp- a high level dominant AI programming language \uf096Paper entitled Programs and Common Sense described the Advice Taker as a complete AI System- use knowledge to search for solutions to problems \uf096AI Lab at Stanford",
+      "page_num": 17,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_17.png"
+    },
+    {
+      "id": "chunk_0017",
+      "text": "Brief History of AI: The Early Period (1952-1969) \u2022 Marvin Minsky (1958) \u2013 anti logical outlook \u2022 J. A. Robinson \u2013 discovery of Resolution Method \u2022 Cordell Green (1969) \u2013 Question answering and planning system \u2022 Minsky\u2019s Students focused on study to solve limited problems that seems to require AI and this domain is called microworlds. \u2022 James Slagle (1963) \u2013 SAINT program solved closed form calculus integration problems \u2022 Tom Evan (1968) \u2013 ANALOGY program solved geometric analogy problems",
+      "page_num": 18,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_18.png"
+    },
+    {
+      "id": "chunk_0018",
+      "text": "Brief History of AI: The Early Period (1952-1969) \u2022 Daniel Bobrow (1967) \u2013 STUDENT program solved algebra problems \u2022 David Huffman (1971) \u2013 The vision project David Waltz (1975) \u2013 The vision and constraint propagation Patrik Winston (1970) \u2013 The learning theory Terry Winoguard (1972) \u2013 The natural language understanding program Scott Fahlman (1974) \u2013 The planner \uf0e0Block World \u2013 Rearrange the blocks using robot hand \u2022 McCulloch and Pitts \u2013 Neural Network \u2022 Bernie Widrow (1962) \u2013 Adalines \u2022 Frank Rosenblatt (1962) \u2013 Perceptron and Perceptron Convergence theorem",
+      "page_num": 19,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_19.png"
+    },
+    {
+      "id": "chunk_0019",
+      "text": "Brief History of AI: Reality Dawns (1966-1973) \u2022 Problems were faced while realization of AI Projects: \uf096The most early programs contained little or no knowledge in their subject matter; success was merely based on simple syntactic manipulation \uf096Intractability of many of the problems; microworlds were comparatively less complicated than real world problems \uf096Fundamental limitations on the basic structures being used to generate intelligent behaviour \uf0e0 Limitations of existing neural network methods identified \u2022 AI failed to convince the funding agencies as the expectations were not matched",
+      "page_num": 20,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_20.png"
+    },
+    {
+      "id": "chunk_0020",
+      "text": "Brief History of AI: Knowledge Based Systems (1969-1979) \u2022 Problem Solving in prior period was based on weak methods \uf0e0 those try to string together the elementary reasoning steps to find complete solutions from a general purpose context \u2022 Alternative was suggested \uf0e0 domain specific knowledge that allows larger reasoning steps and can be easily used to handle typically occurring cases of narrow area of expertise \u2022 Development of knowledge based Systems \u2022 Buchanan et al. (1969) \u2013 The DENDRAL Program that solve the problem of inferring molecular structure from the information provided by mass spectrometer",
+      "page_num": 21,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_21.png"
+    },
+    {
+      "id": "chunk_0021",
+      "text": "Brief History of AI: Knowledge Based Systems (1969-1979) \u2022 Heuristic Programming Project to identify where could Expert Systems be used \u2022 MYCIN Program \uf0e0 used 450 rules to diagnose blood infections \uf096Performed better than junior doctors \u2022 Roger Schank and his students developed a series of programs related to AI and Linguistics \u2022 Development of Successful Rule based Expert Systems \u2022 Minsky (1975) developed idea of frames \uf0e0 that adopted structured approach to assemble facts about particular object and event types and arrange them into a large taxonomy hierarchy analogous to a biological taxonomy",
+      "page_num": 22,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_22.png"
+    },
+    {
+      "id": "chunk_0022",
+      "text": "Brief History of AI: AI as an Industry (1980-Present) \u2022 R1 (1986) \uf0e0 first successful commercial expert system by DEC \uf096Helps to configure orders for new computers \uf096Saved $40 million for DEC \u2022 DEC (1988), developed 40 Expert Systems \u2022 Du Pont, 100 in use and 500 in pipeline \u2022 1981, Japan announced \u201cFifth Generation\u201d Computers which were intelligent and US based company MCC also announced similar computer \uf0e0 Could not came to reality \u2022 AI Winter in the future due to unrealistic promises that were not delivered",
+      "page_num": 23,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_23.png"
+    },
+    {
+      "id": "chunk_0023",
+      "text": "Brief History of AI: Return of Neural Networks (1986-Present) \u2022 Neural networks return to popularity \u2022 Major advances in machine learning algorithms and applications \u2022 Reinvention of back-propagation learning algorithm in mid 1980s \uf096Concept of Parallel Distributed Processing \u2022 Connectionist models of intelligent systems were seen which focused on unjustifiability of symbolic manipulation in decision making",
+      "page_num": 24,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_24.png"
+    },
+    {
+      "id": "chunk_0024",
+      "text": "Brief History of AI: AI as a Science (1987-Present) \u2022 AI focuses on scientific study \u2022 Integration of learning, reasoning, knowledge representation in AI \u2022 AI methods used in vision, language, data mining, etc. \u2022 Bayesian networks as a knowledge representation framework \u2022 Hidden Markov Models based on mathematical theory and training theories \u2022 Emergence of Intelligent Agents",
+      "page_num": 25,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_25.png"
+    },
+    {
+      "id": "chunk_0025",
+      "text": "Brief History of AI: Success Stories \u2022 Deep Blue defeated the reigning world chess champion Garry Kasparov in 1997 \u2022 AI program proved a mathematical conjecture (Robbins conjecture) unsolved for decades \u2022 During the 1991 Gulf War, US forces deployed an AI logistics planning and scheduling program that involved up to 50,000 vehicles, cargo, and people \u2022 NASA's on-board autonomous planning program controlled the scheduling of operations for a spacecraft \u2022 Proverb solves crossword puzzles better than most humans \u2022 Robot driving: DARPA grand challenge 2003-2007 \u2022 2006: face recognition software available in consumer cameras",
+      "page_num": 26,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_26.png"
+    },
+    {
+      "id": "chunk_0026",
+      "text": "Applications of AI \u2022 Autonomous Planning and Scheduling \u2022 Game Playing \u2022 Autonomous Control \u2022 Diagnosis \u2022 Logistics Planning \u2022 Robotics \u2022 Language understanding and Problem Solving",
+      "page_num": 27,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_27.png"
+    },
+    {
+      "id": "chunk_0027",
+      "text": "Importance of AI \u2022 Create a never-ending thought process and collective that could solve our problems \u2022 Thinking of every possible solution \u2022 With artificial intelligence, we could build computers, upon thousands of computers, that could all work in unison to solve our great and most dire problems",
+      "page_num": 28,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_28.png"
+    },
+    {
+      "id": "chunk_0028",
+      "text": "Definition of Knowledge and Learning \u2022 Knowledge is the justified true belief \uf096Data \uf0e0 Information \uf0e0 Knowledge \u2022 Learning is the process of acquiring new or modifying and reinforcing the existing knowledge, behaviours, skills, or values through the synthesis and manipulation of information \u2022 Machine Learning \uf0e0 embedding the learning ability into the machine or computers",
+      "page_num": 29,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_29.png"
+    },
+    {
+      "id": "chunk_0029",
+      "text": "Importance of Knowledge and Learning \u2022 For Understanding the Environment \u2022 For Updating the Knowledge base \u2022 For Problem Solving \u2022 For Decision Making \u2022 For Building Intelligent Systems",
+      "page_num": 30,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_30.png"
+    }
+  ],
+  "chunks_summary": [
+    {
+      "id": "chunk_0000",
+      "page_num": 1,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_1.png",
+      "text_preview": "Artificial Intelligence Chapter I: Introduction to AI"
+    },
+    {
+      "id": "chunk_0001",
+      "page_num": 2,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_2.png",
+      "text_preview": "Outline \u2022 Overview \u2022 Definition of AI \u2022 AI and Related Fields \u2022 Brief History of AI \u2022 Applications of AI \u2022 Importance of"
+    },
+    {
+      "id": "chunk_0002",
+      "page_num": 3,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_3.png",
+      "text_preview": "Overview- Background \u2022 Humans and Mental Capacities \u2022 How we Think? \uf096How we Perceive, Understand, Predict and Manipulate"
+    },
+    {
+      "id": "chunk_0003",
+      "page_num": 4,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_4.png",
+      "text_preview": "Overview- AI and Its Subfields \u2022 General Purpose Areas \uf096Learning \uf096Perception \uf096Natural Language Processing \uf096Common-sense "
+    },
+    {
+      "id": "chunk_0004",
+      "page_num": 5,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_5.png",
+      "text_preview": "Definition of AI- What is AI? \u2022 A thought process \u2022 Reasoning \u2022 Fidelity to Human Performance \u2022 Rationality (doing right"
+    },
+    {
+      "id": "chunk_0005",
+      "page_num": 6,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_6.png",
+      "text_preview": "Definition of AI- Approaches to AI \u2022 Act Humanly: Turing Test Approach \u2022 Think Humanly: Cognitive Modelling Approach \u2022 T"
+    },
+    {
+      "id": "chunk_0006",
+      "page_num": 7,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_7.png",
+      "text_preview": "Act Humanly: Turing Test Approach \u2022 The art of creating machines that perform functions that require intelligence when p"
+    },
+    {
+      "id": "chunk_0007",
+      "page_num": 8,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_8.png",
+      "text_preview": "Act Humanly: Turing Test Approach \u2022 Capabilities need of the computer for the tests: \uf096Natural Language Processing (abili"
+    },
+    {
+      "id": "chunk_0008",
+      "page_num": 9,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_9.png",
+      "text_preview": "Think Humanly: Cognitive Modelling Approach \u2022 The exciting new effort to make computers think\u2026 machines with minds, in t"
+    },
+    {
+      "id": "chunk_0009",
+      "page_num": 10,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_10.png",
+      "text_preview": "Think Rationally: The Laws of Thought Approach \u2022 The study of mental faculties through the use of computational models. "
+    },
+    {
+      "id": "chunk_0010",
+      "page_num": 11,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_11.png",
+      "text_preview": "Act Rationally: The Rational Agent Approach \u2022 Computational Intelligence is the study of the design of intelligent agent"
+    },
+    {
+      "id": "chunk_0011",
+      "page_num": 12,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_12.png",
+      "text_preview": "AI and Related Fields- The Foundations of AI \u2022 Philosophy (428 B.C. \u2013 Present) \uf096Drawing conclusions from the rules \uf096Ment"
+    },
+    {
+      "id": "chunk_0012",
+      "page_num": 13,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_13.png",
+      "text_preview": "AI and Related Fields- The Foundations of AI \u2022 Economics (1776 A.D. \u2013 Present) \uf096How decisions can be made to maximize pa"
+    },
+    {
+      "id": "chunk_0013",
+      "page_num": 14,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_14.png",
+      "text_preview": "AI and Related Fields- The Foundations of AI \u2022 Computer Engineering (1940 A.D. \u2013 Present) \uf096How can we build an efficient"
+    },
+    {
+      "id": "chunk_0014",
+      "page_num": 15,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_15.png",
+      "text_preview": "Brief History of AI- The Gestation Period (1943-1955) \u2022 Warren McCulloch and Walter Pitts (1943): 3 Sources (Knowledge o"
+    },
+    {
+      "id": "chunk_0015",
+      "page_num": 16,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_16.png",
+      "text_preview": "Brief History of AI- The Birth (1956) \u2022 John McCarthy, Marvin Minsky, Claude Shannon and Nathaniel Rochester focused res"
+    },
+    {
+      "id": "chunk_0016",
+      "page_num": 17,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_17.png",
+      "text_preview": "Brief History of AI: The Early Period (1952-1969) \u2022 General Problem Solver \u2013 Thinking Humanly Purpose \u2022 Nathaniel Roches"
+    },
+    {
+      "id": "chunk_0017",
+      "page_num": 18,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_18.png",
+      "text_preview": "Brief History of AI: The Early Period (1952-1969) \u2022 Marvin Minsky (1958) \u2013 anti logical outlook \u2022 J. A. Robinson \u2013 disco"
+    },
+    {
+      "id": "chunk_0018",
+      "page_num": 19,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_19.png",
+      "text_preview": "Brief History of AI: The Early Period (1952-1969) \u2022 Daniel Bobrow (1967) \u2013 STUDENT program solved algebra problems \u2022 Dav"
+    },
+    {
+      "id": "chunk_0019",
+      "page_num": 20,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_20.png",
+      "text_preview": "Brief History of AI: Reality Dawns (1966-1973) \u2022 Problems were faced while realization of AI Projects: \uf096The most early p"
+    },
+    {
+      "id": "chunk_0020",
+      "page_num": 21,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_21.png",
+      "text_preview": "Brief History of AI: Knowledge Based Systems (1969-1979) \u2022 Problem Solving in prior period was based on weak methods \uf0e0 t"
+    },
+    {
+      "id": "chunk_0021",
+      "page_num": 22,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_22.png",
+      "text_preview": "Brief History of AI: Knowledge Based Systems (1969-1979) \u2022 Heuristic Programming Project to identify where could Expert "
+    },
+    {
+      "id": "chunk_0022",
+      "page_num": 23,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_23.png",
+      "text_preview": "Brief History of AI: AI as an Industry (1980-Present) \u2022 R1 (1986) \uf0e0 first successful commercial expert system by DEC \uf096He"
+    },
+    {
+      "id": "chunk_0023",
+      "page_num": 24,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_24.png",
+      "text_preview": "Brief History of AI: Return of Neural Networks (1986-Present) \u2022 Neural networks return to popularity \u2022 Major advances in"
+    },
+    {
+      "id": "chunk_0024",
+      "page_num": 25,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_25.png",
+      "text_preview": "Brief History of AI: AI as a Science (1987-Present) \u2022 AI focuses on scientific study \u2022 Integration of learning, reasonin"
+    },
+    {
+      "id": "chunk_0025",
+      "page_num": 26,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_26.png",
+      "text_preview": "Brief History of AI: Success Stories \u2022 Deep Blue defeated the reigning world chess champion Garry Kasparov in 1997 \u2022 AI "
+    },
+    {
+      "id": "chunk_0026",
+      "page_num": 27,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_27.png",
+      "text_preview": "Applications of AI \u2022 Autonomous Planning and Scheduling \u2022 Game Playing \u2022 Autonomous Control \u2022 Diagnosis \u2022 Logistics Plan"
+    },
+    {
+      "id": "chunk_0027",
+      "page_num": 28,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_28.png",
+      "text_preview": "Importance of AI \u2022 Create a never-ending thought process and collective that could solve our problems \u2022 Thinking of ever"
+    },
+    {
+      "id": "chunk_0028",
+      "page_num": 29,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_29.png",
+      "text_preview": "Definition of Knowledge and Learning \u2022 Knowledge is the justified true belief \uf096Data \uf0e0 Information \uf0e0 Knowledge \u2022 Learning"
+    },
+    {
+      "id": "chunk_0029",
+      "page_num": 30,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785051840023_or1qq/pdf_page_30.png",
+      "text_preview": "Importance of Knowledge and Learning \u2022 For Understanding the Environment \u2022 For Updating the Knowledge base \u2022 For Problem"
+    }
+  ]
+}
