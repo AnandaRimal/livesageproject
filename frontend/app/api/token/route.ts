@@ -38,9 +38,15 @@ export async function POST(req: Request) {
     // Parse room config from request body.
     // IMPORTANT: Always trust the room_config from the request body first.
     // The AGENT_NAME env var is only a last-resort fallback when no config is sent at all.
-    const body = await req.json();
+    let body: Record<string, unknown> = {};
+    try {
+      body = await req.json();
+    } catch {
+      // Body is empty or not valid JSON — use defaults
+      body = {};
+    }
     let roomConfig = body?.room_config
-      ? RoomConfiguration.fromJson(body.room_config, { ignoreUnknownFields: true })
+      ? RoomConfiguration.fromJson(body.room_config as any, { ignoreUnknownFields: true })
       : undefined;
 
     // Only apply env fallback when the frontend sent NO room_config.
@@ -57,15 +63,16 @@ export async function POST(req: Request) {
       }
     }
 
-    // Retrieve selected agent from request body (defaults to 'search')
+    // Retrieve selected agent and optional tutorSessionId from request body
     const selectedAgent = body?.selectedAgent ?? 'search';
+    const tutorSessionId = body?.tutorSessionId;
 
     // Generate participant token
     const participantName = 'Alex';
     const participantIdentity = `voice_assistant_user_${Math.floor(Math.random() * 10_000)}`;
     const roomName = `voice_assistant_room_${Math.floor(Math.random() * 10_000)}`;
 
-    const metadata = JSON.stringify({ selectedAgent });
+    const metadata = JSON.stringify({ selectedAgent, tutorSessionId });
 
     const participantToken = await createParticipantToken(
       { identity: participantIdentity, name: participantName, metadata },

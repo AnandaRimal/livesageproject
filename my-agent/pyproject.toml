@@ -18,6 +18,9 @@ dependencies = [
     "pandas",
     "yfinance",
     "livekit-plugins-bey>=1.6.2",
+    "pymupdf",
+    "chromadb",
+    "sentence-transformers>=5.6.1",
 ]
 
 [dependency-groups]

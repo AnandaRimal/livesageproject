@@ -1,0 +1,302 @@
+{
+  "session_id": "session_1784957920591_2c8oh",
+  "pdf_name": "session_1784957920591_2c8oh_OODM_Final_Saroj.pdf",
+  "total_pages": 33,
+  "total_chunks": 33,
+  "collection_name": "tutor_session_1784957920591_2c8oh",
+  "created_at": 1784957929.8514953,
+  "chunks_summary": [
+    {
+      "id": "chunk_0000",
+      "page_num": 1,
+      "chapter_title": "OBJECT ORIENTED ANALYSIS",
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 OBJECT ORIENT"
+    },
+    {
+      "id": "chunk_0001",
+      "page_num": 2,
+      "chapter_title": null,
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 Structured Qu"
+    },
+    {
+      "id": "chunk_0002",
+      "page_num": 3,
+      "chapter_title": null,
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 JAD stands fo"
+    },
+    {
+      "id": "chunk_0003",
+      "page_num": 4,
+      "chapter_title": null,
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 The Plan and "
+    },
+    {
+      "id": "chunk_0004",
+      "page_num": 5,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page5_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 A conceptual/"
+    },
+    {
+      "id": "chunk_0005",
+      "page_num": 6,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page6_img1.png",
+        "session_1784957920591_2c8oh/page6_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 - responsibil"
+    },
+    {
+      "id": "chunk_0006",
+      "page_num": 7,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page7_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 It can be vie"
+    },
+    {
+      "id": "chunk_0007",
+      "page_num": 8,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page8_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 Domain Models"
+    },
+    {
+      "id": "chunk_0008",
+      "page_num": 9,
+      "chapter_title": null,
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 Guideline: It"
+    },
+    {
+      "id": "chunk_0009",
+      "page_num": 10,
+      "chapter_title": "1. Cashier enters the cash amount tendered.",
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UMLPage PAGE \\* MERGEFORMAT 40 10.Customer l"
+    },
+    {
+      "id": "chunk_0010",
+      "page_num": 11,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page11_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 or? In the r"
+    },
+    {
+      "id": "chunk_0011",
+      "page_num": 12,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page12_img1.png",
+        "session_1784957920591_2c8oh/page12_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 concepts and"
+    },
+    {
+      "id": "chunk_0012",
+      "page_num": 13,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page13_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 High Priorit"
+    },
+    {
+      "id": "chunk_0013",
+      "page_num": 14,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page14_img1.png",
+        "session_1784957920591_2c8oh/page14_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Each end of "
+    },
+    {
+      "id": "chunk_0014",
+      "page_num": 15,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page15_img1.png",
+        "session_1784957920591_2c8oh/page15_img2.png",
+        "session_1784957920591_2c8oh/page15_img3.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Multiple Ass"
+    },
+    {
+      "id": "chunk_0015",
+      "page_num": 16,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page16_img1.png",
+        "session_1784957920591_2c8oh/page16_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Point of Sal"
+    },
+    {
+      "id": "chunk_0016",
+      "page_num": 17,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page17_img1.png",
+        "session_1784957920591_2c8oh/page17_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 iii. Domain "
+    },
+    {
+      "id": "chunk_0017",
+      "page_num": 18,
+      "chapter_title": null,
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Attributes s"
+    },
+    {
+      "id": "chunk_0018",
+      "page_num": 19,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page19_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Current use "
+    },
+    {
+      "id": "chunk_0019",
+      "page_num": 20,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page20_img1.png",
+        "session_1784957920591_2c8oh/page20_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Multiplicity"
+    },
+    {
+      "id": "chunk_0020",
+      "page_num": 21,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page21_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 e.g. a cashi"
+    },
+    {
+      "id": "chunk_0021",
+      "page_num": 22,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page22_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Example of a"
+    },
+    {
+      "id": "chunk_0022",
+      "page_num": 23,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page23_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Significance"
+    },
+    {
+      "id": "chunk_0023",
+      "page_num": 24,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page24_img1.png",
+        "session_1784957920591_2c8oh/page24_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Like in case"
+    },
+    {
+      "id": "chunk_0024",
+      "page_num": 25,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page25_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 but for this"
+    },
+    {
+      "id": "chunk_0025",
+      "page_num": 26,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page26_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Contracts fo"
+    },
+    {
+      "id": "chunk_0026",
+      "page_num": 27,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page27_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 achieved. It"
+    },
+    {
+      "id": "chunk_0027",
+      "page_num": 28,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page28_img1.png",
+        "session_1784957920591_2c8oh/page28_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Example Cont"
+    },
+    {
+      "id": "chunk_0028",
+      "page_num": 29,
+      "chapter_title": "3.  Open the curtains and take a second picture.",
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 3. Open the "
+    },
+    {
+      "id": "chunk_0029",
+      "page_num": 30,
+      "chapter_title": null,
+      "image_paths": [],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40 Some worth p"
+    },
+    {
+      "id": "chunk_0030",
+      "page_num": 31,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page31_img1.png",
+        "session_1784957920591_2c8oh/page31_img2.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40"
+    },
+    {
+      "id": "chunk_0031",
+      "page_num": 32,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page32_img1.png",
+        "session_1784957920591_2c8oh/page32_img2.png",
+        "session_1784957920591_2c8oh/page32_img3.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40"
+    },
+    {
+      "id": "chunk_0032",
+      "page_num": 33,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1784957920591_2c8oh/page33_img1.png"
+      ],
+      "text_preview": "Saroj Shakya, Object Oriented Design and Modeling using UML Page PAGE \\* MERGEFORMAT 40"
+    }
+  ]
+}
