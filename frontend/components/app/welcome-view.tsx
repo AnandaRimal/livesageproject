@@ -64,7 +64,10 @@ export const WelcomeView = ({
   // Alert state
   const [alertMessage, setAlertMessage] = useState('Hello, you are alerting 🔔');
   const [alertSending, setAlertSending] = useState(false);
-  const [alertStatus, setAlertStatus] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [alertStatus, setAlertStatus] = useState<{
+    type: 'success' | 'error';
+    text: string;
+  } | null>(null);
   const alertStatusTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Set greeting based on time of day
@@ -188,44 +191,44 @@ export const WelcomeView = ({
           </nav>
         </div>
 
-          {/* Upgrade Card */}
-          <div className="space-y-4">
-            <div className="relative overflow-hidden rounded-2xl border border-indigo-100 bg-gradient-to-b from-indigo-50 to-violet-50 p-4 shadow-sm">
-              <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold tracking-wider text-amber-600 uppercase">
-                <Sparkles className="size-3 fill-amber-400/20" />
-                LiveSage Pro
-              </div>
-              <p className="mb-3 text-[11px] leading-relaxed font-medium text-slate-500">
-                Unlock unlimited agents and premium features.
-              </p>
-              <button className="w-full cursor-pointer rounded-lg bg-indigo-600 py-2 text-xs font-bold tracking-wide text-white shadow-sm transition hover:bg-indigo-700 active:scale-98">
-                Upgrade Now
-              </button>
+        {/* Upgrade Card */}
+        <div className="space-y-4">
+          <div className="relative overflow-hidden rounded-2xl border border-indigo-100 bg-gradient-to-b from-indigo-50 to-violet-50 p-4 shadow-sm">
+            <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold tracking-wider text-amber-600 uppercase">
+              <Sparkles className="size-3 fill-amber-400/20" />
+              LiveSage Pro
             </div>
-
-            {/* Dark Mode Toggle */}
-            <div className="flex items-center justify-between border-t border-slate-200 px-1 py-2 pt-3">
-              <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-slate-500">
-                <Moon className="size-3.5" />
-                Dark Mode
-              </span>
-              <button
-                onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-                className={cn(
-                  'relative inline-flex h-5.5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
-                  resolvedTheme === 'dark' ? 'bg-indigo-600' : 'bg-slate-200'
-                )}
-              >
-                <span
-                  className={cn(
-                    'pointer-events-none inline-block h-4.5 w-4.5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                    resolvedTheme === 'dark' ? 'translate-x-4.5' : 'translate-x-0'
-                  )}
-                />
-              </button>
-            </div>
+            <p className="mb-3 text-[11px] leading-relaxed font-medium text-slate-500">
+              Unlock unlimited agents and premium features.
+            </p>
+            <button className="w-full cursor-pointer rounded-lg bg-indigo-600 py-2 text-xs font-bold tracking-wide text-white shadow-sm transition hover:bg-indigo-700 active:scale-98">
+              Upgrade Now
+            </button>
           </div>
-        </aside>
+
+          {/* Dark Mode Toggle */}
+          <div className="flex items-center justify-between border-t border-slate-200 px-1 py-2 pt-3">
+            <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-slate-500">
+              <Moon className="size-3.5" />
+              Dark Mode
+            </span>
+            <button
+              onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+              className={cn(
+                'relative inline-flex h-5.5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
+                resolvedTheme === 'dark' ? 'bg-indigo-600' : 'bg-slate-200'
+              )}
+            >
+              <span
+                className={cn(
+                  'pointer-events-none inline-block h-4.5 w-4.5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                  resolvedTheme === 'dark' ? 'translate-x-4.5' : 'translate-x-0'
+                )}
+              />
+            </button>
+          </div>
+        </div>
+      </aside>
 
       {/* ── Mobile Sidebar Drawer ── */}
       {mobileMenuOpen && (
@@ -243,7 +246,10 @@ export const WelcomeView = ({
                   </div>
                   <span className="font-sans text-base font-bold text-indigo-700">LiveSage</span>
                 </div>
-                <button onClick={() => setMobileMenuOpen(false)} className="text-slate-400 hover:text-slate-700">
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-slate-400 hover:text-slate-700"
+                >
                   <X className="size-5" />
                 </button>
               </div>
@@ -269,7 +275,9 @@ export const WelcomeView = ({
               </nav>
             </div>
             <div className="rounded-2xl border border-indigo-100 bg-indigo-50 p-4">
-              <div className="mb-1 text-xs font-semibold tracking-wider text-amber-600 uppercase">LiveSage Pro</div>
+              <div className="mb-1 text-xs font-semibold tracking-wider text-amber-600 uppercase">
+                LiveSage Pro
+              </div>
               <p className="mb-3 text-[11px] text-slate-500">Unlock all agents & premium tools.</p>
               <button className="w-full cursor-pointer rounded-lg bg-indigo-600 py-2 text-xs font-bold text-white">
                 Upgrade Now
@@ -292,7 +300,10 @@ export const WelcomeView = ({
           </button>
 
           {/* Search Bar — centred */}
-          <form onSubmit={handleSearchSubmit} className="mx-4 flex max-w-xl flex-1 items-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 shadow-inner focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100">
+          <form
+            onSubmit={handleSearchSubmit}
+            className="mx-4 flex max-w-xl flex-1 items-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 shadow-inner focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100"
+          >
             <Search className="mr-2.5 size-4 shrink-0 text-slate-400" />
             <input
               type="text"
@@ -352,7 +363,10 @@ export const WelcomeView = ({
               { label: 'Queries Done', value: '89', color: 'text-orange-600', bg: 'bg-orange-50' },
               { label: 'Saved Notes', value: '24', color: 'text-blue-600', bg: 'bg-blue-50' },
             ].map((stat) => (
-              <div key={stat.label} className={cn('rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm')}>
+              <div
+                key={stat.label}
+                className={cn('rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm')}
+              >
                 <div className={cn('text-3xl font-extrabold', stat.color)}>{stat.value}</div>
                 <div className="mt-1 text-xs font-semibold text-slate-500">{stat.label}</div>
               </div>
@@ -362,7 +376,9 @@ export const WelcomeView = ({
           {/* AI Team Section Header */}
           <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
             <div>
-              <h2 className="text-lg font-extrabold tracking-tight text-slate-800">Your AI Agents</h2>
+              <h2 className="text-lg font-extrabold tracking-tight text-slate-800">
+                Your AI Agents
+              </h2>
               <p className="mt-0.5 text-xs font-medium text-slate-400">
                 Click any agent to start a real-time voice session
               </p>
@@ -413,7 +429,9 @@ export const WelcomeView = ({
 
                   {/* Card Footer */}
                   <div className="flex flex-col gap-1.5 px-4 py-3">
-                    <h3 className="text-[14px] font-bold tracking-tight text-slate-800">{agent.name}</h3>
+                    <h3 className="text-[14px] font-bold tracking-tight text-slate-800">
+                      {agent.name}
+                    </h3>
                     <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-500">
                       {agent.description}
                     </p>
@@ -434,15 +452,19 @@ export const WelcomeView = ({
           </div>
 
           {/* ── Neha Alert Features ── */}
-          <div className="rounded-2xl border border-indigo-100 bg-white shadow-sm overflow-hidden">
+          <div className="overflow-hidden rounded-2xl border border-indigo-100 bg-white shadow-sm">
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-indigo-50 bg-gradient-to-r from-violet-50 to-indigo-50 px-6 py-4">
               <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 shadow-lg shadow-violet-200">
                 <BellRing className="size-5 text-white" />
               </div>
               <div>
-                <h2 className="text-base font-extrabold tracking-tight text-slate-800">Neha Alert Features</h2>
-                <p className="text-[11px] font-medium text-slate-400">Send an instant SMS alert via Twilio</p>
+                <h2 className="text-base font-extrabold tracking-tight text-slate-800">
+                  Neha Alert Features
+                </h2>
+                <p className="text-[11px] font-medium text-slate-400">
+                  Send an instant SMS alert via Twilio
+                </p>
               </div>
             </div>
 
@@ -455,20 +477,24 @@ export const WelcomeView = ({
                 value={alertMessage}
                 onChange={(e) => setAlertMessage(e.target.value)}
                 required
-                className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 placeholder-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 focus:outline-none transition-all"
+                className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 placeholder-slate-400 transition-all focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 focus:outline-none"
               />
 
               {/* Status */}
               {alertStatus && (
-                <div className={cn(
-                  'flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold border',
-                  alertStatus.type === 'success'
-                    ? 'bg-green-50 text-green-700 border-green-200'
-                    : 'bg-red-50 text-red-700 border-red-200'
-                )}>
-                  {alertStatus.type === 'success'
-                    ? <CheckCircle2 className="size-4 shrink-0 text-green-500" />
-                    : <AlertTriangle className="size-4 shrink-0 text-red-500" />}
+                <div
+                  className={cn(
+                    'flex items-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold',
+                    alertStatus.type === 'success'
+                      ? 'border-green-200 bg-green-50 text-green-700'
+                      : 'border-red-200 bg-red-50 text-red-700'
+                  )}
+                >
+                  {alertStatus.type === 'success' ? (
+                    <CheckCircle2 className="size-4 shrink-0 text-green-500" />
+                  ) : (
+                    <AlertTriangle className="size-4 shrink-0 text-red-500" />
+                  )}
                   {alertStatus.text}
                 </div>
               )}
@@ -478,12 +504,16 @@ export const WelcomeView = ({
                 id="send-alert-btn"
                 type="submit"
                 disabled={alertSending || !alertMessage.trim()}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-md shadow-violet-200 transition-all hover:from-violet-700 hover:to-indigo-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-md shadow-violet-200 transition-all hover:from-violet-700 hover:to-indigo-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {alertSending ? (
-                  <><Loader2 className="size-4 animate-spin" /> Sending...</>
+                  <>
+                    <Loader2 className="size-4 animate-spin" /> Sending...
+                  </>
                 ) : (
-                  <><Send className="size-4" /> Set Alert</>
+                  <>
+                    <Send className="size-4" /> Set Alert
+                  </>
                 )}
               </button>
             </form>
@@ -492,7 +522,7 @@ export const WelcomeView = ({
           {/* Footer */}
           <div className="mt-4 flex items-center justify-center gap-2 border-t border-slate-200 py-6 text-xs font-semibold text-slate-400 select-none">
             <Sparkles className="size-3.5 fill-violet-400/10 text-violet-400" />
-            <span>"One platform. Multiple experts. Infinite possibilities."</span>
+            <span>&quot;One platform. Multiple experts. Infinite possibilities.&quot;</span>
             <Sparkles className="size-3.5 fill-indigo-400/10 text-indigo-400" />
           </div>
         </main>

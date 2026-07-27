@@ -103,12 +103,14 @@ function AppSetup({ selectedAgent }: AppSetupProps) {
       const payload = JSON.stringify({ type: 'selected-agent', agentId });
       const data = encoder.encode(payload);
 
-      room.localParticipant.publishData(data, {
-        reliable: true,
-        topic: 'agent-ui',
-      }).catch((err) => {
-        console.error('[AppSetup] Failed to publish selected-agent data packet:', err);
-      });
+      room.localParticipant
+        .publishData(data, {
+          reliable: true,
+          topic: 'agent-ui',
+        })
+        .catch((err) => {
+          console.error('[AppSetup] Failed to publish selected-agent data packet:', err);
+        });
     }
   }, [isConnected, room, selectedAgent]);
 
@@ -137,7 +139,14 @@ export function App({ appConfig }: AppProps) {
         const agentId = activeAgent?.id || 'search';
         const agentName = activeAgent?.agentName || appConfig.agentName;
 
-        console.log('[token] fetching token for agent:', agentId, 'name:', agentName, 'tutorSessionId:', tutorSessionIdRef.current);
+        console.log(
+          '[token] fetching token for agent:',
+          agentId,
+          'name:',
+          agentName,
+          'tutorSessionId:',
+          tutorSessionIdRef.current
+        );
 
         const res = await fetch('/api/token', {
           method: 'POST',
@@ -172,7 +181,11 @@ export function App({ appConfig }: AppProps) {
         : undefined
   );
 
-  const handleStartCallWithAgent = (agent: AgentDefinition, startFn: () => void, sessionId?: string) => {
+  const handleStartCallWithAgent = (
+    agent: AgentDefinition,
+    startFn: () => void,
+    sessionId?: string
+  ) => {
     selectedAgentRef.current = agent;
     if (sessionId) {
       tutorSessionIdRef.current = sessionId;
@@ -191,7 +204,9 @@ export function App({ appConfig }: AppProps) {
         <ViewController
           appConfig={appConfig}
           selectedAgent={selectedAgent}
-          onSelectAgent={(agent, startFn, sessionId) => handleStartCallWithAgent(agent, startFn, sessionId)}
+          onSelectAgent={(agent, startFn, sessionId) =>
+            handleStartCallWithAgent(agent, startFn, sessionId)
+          }
         />
       </main>
       <StartAudioButton label="Start Audio" />

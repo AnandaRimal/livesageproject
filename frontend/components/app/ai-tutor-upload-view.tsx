@@ -1,18 +1,18 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
-  FileText,
-  Upload,
-  CheckCircle2,
-  BookOpen,
-  ArrowLeft,
-  Sparkles,
-  Loader2,
   AlertCircle,
+  ArrowLeft,
+  BookOpen,
+  CheckCircle2,
+  FileText,
   GraduationCap,
+  Loader2,
+  Sparkles,
+  Upload,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { cn } from '@/lib/shadcn/utils';
 
 export interface AiTutorUploadViewProps {
@@ -39,9 +39,21 @@ interface StepItem {
 const STEPS: StepItem[] = [
   { id: 'uploading', label: 'Uploading PDF...', subText: 'Preparing document for AI analysis' },
   { id: 'extracting_text', label: 'Extracting text...', subText: 'Reading pages and structure' },
-  { id: 'extracting_images', label: 'Extracting images...', subText: 'Isolating diagrams and figures' },
-  { id: 'embedding', label: 'Preparing index...', subText: 'Building fast document retrieval index' },
-  { id: 'saving_chromadb', label: 'Saving to ChromaDB...', subText: 'Storing all sections for retrieval' },
+  {
+    id: 'extracting_images',
+    label: 'Extracting images...',
+    subText: 'Isolating diagrams and figures',
+  },
+  {
+    id: 'embedding',
+    label: 'Preparing index...',
+    subText: 'Building fast document retrieval index',
+  },
+  {
+    id: 'saving_chromadb',
+    label: 'Saving to ChromaDB...',
+    subText: 'Storing all sections for retrieval',
+  },
   { id: 'ready', label: 'Ready to Teach', subText: 'Classroom prepared for your session' },
 ];
 
@@ -130,10 +142,11 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
           }
         }
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorObj = err as Error;
       console.error('[Upload] Error:', err);
       setCurrentStep('error');
-      setErrorMessage(err.message || 'An unexpected error occurred during upload');
+      setErrorMessage(errorObj.message || 'An unexpected error occurred during upload');
     }
   };
 
@@ -149,7 +162,7 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
   const currentStepIdx = stepOrder.indexOf(currentStep);
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col items-center justify-center bg-[#f4f6fb] p-6 text-slate-800 font-sans overflow-x-hidden">
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-[#f4f6fb] p-6 font-sans text-slate-800">
       {/* Dynamic Background */}
       <div
         className="pointer-events-none absolute top-[-10%] left-[-10%] size-[40vw] rounded-full opacity-15 blur-[150px]"
@@ -161,7 +174,7 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
       />
 
       {/* Top Header Controls */}
-      <header className="absolute top-6 left-6 right-6 flex items-center justify-between">
+      <header className="absolute top-6 right-6 left-6 flex items-center justify-between">
         <button
           onClick={onBack}
           className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white/80 px-4 py-2 text-xs font-bold text-slate-600 shadow-sm backdrop-blur-md transition hover:bg-white hover:text-slate-900"
@@ -176,15 +189,16 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
 
       <main className="z-10 flex w-full max-w-2xl flex-col items-center gap-6">
         {/* Title */}
-        <div className="text-center space-y-2">
-          <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 shadow-lg shadow-violet-500/20 text-white">
+        <div className="space-y-2 text-center">
+          <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/20">
             <BookOpen className="size-7" />
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
             Upload Your Study Material
           </h1>
-          <p className="text-sm font-medium text-slate-500 max-w-md mx-auto">
-            Upload any PDF book, lecture slides, or research paper. Your AI Tutor will analyze it and prepare an interactive 1-on-1 lecture.
+          <p className="mx-auto max-w-md text-sm font-medium text-slate-500">
+            Upload any PDF book, lecture slides, or research paper. Your AI Tutor will analyze it
+            and prepare an interactive 1-on-1 lecture.
           </p>
         </div>
 
@@ -204,9 +218,9 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
             }}
             onClick={() => fileInputRef.current?.click()}
             className={cn(
-              'group relative flex w-full cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed p-10 text-center transition-all duration-300 bg-white shadow-sm',
+              'group relative flex w-full cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed bg-white p-10 text-center shadow-sm transition-all duration-300',
               isDragOver
-                ? 'border-violet-600 bg-violet-50/50 scale-[1.01]'
+                ? 'scale-[1.01] border-violet-600 bg-violet-50/50'
                 : 'border-slate-300 hover:border-violet-400 hover:bg-slate-50/50'
             )}
           >
@@ -239,15 +253,15 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
           </div>
         ) : (
           /* Processing Progress Card */
-          <div className="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm space-y-6">
+          <div className="w-full space-y-6 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
             {/* File Info */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <div className="flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-violet-100 text-violet-700 font-bold">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-violet-100 font-bold text-violet-700">
                   <FileText className="size-5" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-slate-800 truncate max-w-[280px]">
+                  <h4 className="max-w-[280px] truncate text-sm font-bold text-slate-800">
                     {selectedFile?.name}
                   </h4>
                   <p className="text-xs text-slate-400">
@@ -294,7 +308,7 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
                     key={step.id}
                     className={cn(
                       'flex items-start gap-3 rounded-xl p-2.5 transition-colors',
-                      isCurrent ? 'bg-violet-50/70 border border-violet-100' : 'opacity-70'
+                      isCurrent ? 'border border-violet-100 bg-violet-50/70' : 'opacity-70'
                     )}
                   >
                     <div className="mt-0.5">
@@ -313,8 +327,8 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
                           isComplete
                             ? 'text-slate-800'
                             : isCurrent
-                            ? 'text-violet-900'
-                            : 'text-slate-400'
+                              ? 'text-violet-900'
+                              : 'text-slate-400'
                         )}
                       >
                         {step.label}
@@ -331,7 +345,7 @@ export function AiTutorUploadView({ onBack, onJoinClassroom }: AiTutorUploadView
               <button
                 disabled={currentStep !== 'ready' || !sessionId}
                 onClick={() => sessionId && onJoinClassroom(sessionId)}
-                className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-500/25 transition-all hover:from-violet-700 hover:to-indigo-700 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
+                className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-500/25 transition-all hover:from-violet-700 hover:to-indigo-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Sparkles className="size-4" />
                 Join AI Classroom

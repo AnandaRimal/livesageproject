@@ -46,7 +46,12 @@ export async function POST(req: Request) {
       body = {};
     }
     let roomConfig = body?.room_config
-      ? RoomConfiguration.fromJson(body.room_config as any, { ignoreUnknownFields: true })
+      ? RoomConfiguration.fromJson(
+          body.room_config as Parameters<typeof RoomConfiguration.fromJson>[0],
+          {
+            ignoreUnknownFields: true,
+          }
+        )
       : undefined;
 
     // Only apply env fallback when the frontend sent NO room_config.

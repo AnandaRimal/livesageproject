@@ -60,10 +60,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     >
       <head>
         {styles && <style>{styles}</style>}
-        <title>LiveSage — AI Voice Assistant</title>
+        <title>LiveSage — AI Tutor</title>
         <meta
           name="description"
-          content="LiveSage: A premium AI voice assistant powered by Gemini and LiveKit with real-time web search, notebook, and live news."
+          content="LiveSage: A premium AI Tutor powered by Gemini and LiveKit with interactive PDF teaching, voice assistant, notebook, and live news."
         />
       </head>
       <body className="overflow-x-hidden">

@@ -1,11 +1,8 @@
 import { NextResponse } from 'next/server';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
+export async function GET(request: Request, { params }: { params: Promise<{ path: string[] }> }) {
   try {
     const resolvedParams = await params;
     const pathParts = resolvedParams.path || [];

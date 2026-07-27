@@ -11,16 +11,16 @@ export async function POST(req: NextRequest) {
 
     if (!accountSid || !authToken || !fromNumber) {
       return NextResponse.json(
-        { error: 'Twilio credentials not configured. Please set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_FROM_NUMBER in .env.local' },
+        {
+          error:
+            'Twilio credentials not configured. Please set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_FROM_NUMBER in .env.local',
+        },
         { status: 500 }
       );
     }
 
     if (!to || !message) {
-      return NextResponse.json(
-        { error: 'Missing required fields: to, message' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Missing required fields: to, message' }, { status: 400 });
     }
 
     // Call Twilio REST API directly (no SDK needed)
@@ -63,9 +63,6 @@ export async function POST(req: NextRequest) {
     });
   } catch (err: unknown) {
     console.error('[Alert API] Unexpected error:', err);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

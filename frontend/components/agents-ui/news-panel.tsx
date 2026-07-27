@@ -1,7 +1,14 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ExternalLinkIcon, NewspaperIcon, TrendingUpIcon, XIcon, SearchIcon, ImageIcon } from 'lucide-react';
+import {
+  ExternalLinkIcon,
+  ImageIcon,
+  NewspaperIcon,
+  SearchIcon,
+  TrendingUpIcon,
+  XIcon,
+} from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useDataChannel } from '@livekit/components-react';
 
@@ -97,7 +104,10 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
         setChartData(data as ChartMessage);
         setActiveTab('charts');
         setIsOpen(true);
-      } else if (data.type === 'show_image' && typeof (data as ShowImageMessage).image_path === 'string') {
+      } else if (
+        data.type === 'show_image' &&
+        typeof (data as ShowImageMessage).image_path === 'string'
+      ) {
         setSearchingMessage(null);
         if (searchingTimerRef.current) clearTimeout(searchingTimerRef.current);
         setGalleryIndex(0); // always start from first image
@@ -159,21 +169,23 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
             </span>
           </div>
           {current.subtitle && (
-            <p className="text-[10px] text-white/40 -mt-1 px-0.5">{current.subtitle}</p>
+            <p className="-mt-1 px-0.5 text-[10px] text-white/40">{current.subtitle}</p>
           )}
           {/* Image */}
-          <div 
+          <div
             onClick={() => setLightboxImage(current.image_path)}
-            className="overflow-hidden rounded-xl border border-white/10 bg-black/30 cursor-zoom-in hover:border-violet-500/50 transition-colors group/img relative"
+            className="group/img relative cursor-zoom-in overflow-hidden rounded-xl border border-white/10 bg-black/30 transition-colors hover:border-violet-500/50"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={current.image_path}
               alt={current.title}
-              className="w-full object-contain max-h-[260px] transition-transform duration-300 group-hover/img:scale-[1.02]"
+              className="max-h-[260px] w-full object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
             />
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 flex items-center justify-center transition-opacity duration-300">
-              <span className="bg-black/60 backdrop-blur-md text-[10px] text-white px-2 py-1 rounded-md border border-white/10">Click to expand</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-300 group-hover/img:opacity-100">
+              <span className="rounded-md border border-white/10 bg-black/60 px-2 py-1 text-[10px] text-white backdrop-blur-md">
+                Click to expand
+              </span>
             </div>
           </div>
           {/* Prev / Next navigation */}
@@ -181,7 +193,7 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
             <button
               onClick={() => setGalleryIndex((i) => Math.max(0, i - 1))}
               disabled={galleryIndex === 0}
-              className="flex-1 rounded-lg border border-white/10 bg-white/5 py-1.5 text-[11px] font-semibold text-white/50 transition hover:bg-white/10 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed"
+              className="flex-1 rounded-lg border border-white/10 bg-white/5 py-1.5 text-[11px] font-semibold text-white/50 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-20"
             >
               ← Prev
             </button>
@@ -202,7 +214,7 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
             <button
               onClick={() => setGalleryIndex((i) => Math.min(gallery.length - 1, i + 1))}
               disabled={galleryIndex === gallery.length - 1}
-              className="flex-1 rounded-lg border border-white/10 bg-white/5 py-1.5 text-[11px] font-semibold text-white/50 transition hover:bg-white/10 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed"
+              className="flex-1 rounded-lg border border-white/10 bg-white/5 py-1.5 text-[11px] font-semibold text-white/50 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-20"
             >
               Next →
             </button>
@@ -221,20 +233,22 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
           </span>
         </div>
         {imageData.subtitle && (
-          <p className="text-[10px] text-white/40 -mt-1 px-0.5">{imageData.subtitle}</p>
+          <p className="-mt-1 px-0.5 text-[10px] text-white/40">{imageData.subtitle}</p>
         )}
-        <div 
+        <div
           onClick={() => setLightboxImage(imageData.image_path)}
-          className="overflow-hidden rounded-xl border border-white/10 bg-black/30 cursor-zoom-in hover:border-violet-500/50 transition-colors group/img relative"
+          className="group/img relative cursor-zoom-in overflow-hidden rounded-xl border border-white/10 bg-black/30 transition-colors hover:border-violet-500/50"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageData.image_path}
             alt={imageData.title}
-            className="w-full object-contain max-h-[300px] transition-transform duration-300 group-hover/img:scale-[1.02]"
+            className="max-h-[300px] w-full object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
           />
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 flex items-center justify-center transition-opacity duration-300">
-            <span className="bg-black/60 backdrop-blur-md text-[10px] text-white px-2 py-1 rounded-md border border-white/10">Click to expand</span>
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-300 group-hover/img:opacity-100">
+            <span className="rounded-md border border-white/10 bg-black/60 px-2 py-1 text-[10px] text-white backdrop-blur-md">
+              Click to expand
+            </span>
           </div>
         </div>
       </div>
@@ -452,7 +466,9 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
               <button
                 onClick={() => setActiveTab('news')}
                 className={`flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold tracking-wider uppercase transition-colors ${
-                  activeTab === 'news' ? 'text-cyan-400' : 'text-foreground/30 hover:text-foreground/75'
+                  activeTab === 'news'
+                    ? 'text-cyan-400'
+                    : 'text-foreground/30 hover:text-foreground/75'
                 }`}
               >
                 <NewspaperIcon className="size-3" />
@@ -491,7 +507,7 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
           </div>
         ) : (
           <div className="flex items-center justify-between border-b border-white/5 bg-black/10 px-3 py-2">
-            <div className="flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold tracking-wider uppercase text-cyan-400">
+            <div className="flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold tracking-wider text-cyan-400 uppercase">
               <SearchIcon className="size-3" />
               Search Results
             </div>
@@ -578,9 +594,7 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
               )}
             </>
           ) : (
-            <>
-              {renderImage()}
-            </>
+            <>{renderImage()}</>
           )}
         </div>
       </motion.div>
@@ -593,7 +607,7 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setLightboxImage(null)}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 cursor-zoom-out"
+            className="fixed inset-0 z-[9999] flex cursor-zoom-out items-center justify-center bg-black/85 p-4 backdrop-blur-md"
           >
             <motion.div
               initial={{ scale: 0.95, y: 15 }}
@@ -605,7 +619,7 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
             >
               <button
                 onClick={() => setLightboxImage(null)}
-                className="absolute right-4 top-4 z-10 rounded-full bg-black/60 p-2 text-white/80 hover:text-white backdrop-blur-md transition-colors hover:bg-black/80 border border-white/10"
+                className="absolute top-4 right-4 z-10 rounded-full border border-white/10 bg-black/60 p-2 text-white/80 backdrop-blur-md transition-colors hover:bg-black/80 hover:text-white"
               >
                 <XIcon className="size-5" />
               </button>
@@ -613,7 +627,7 @@ export function NewsPanel({ agentId = 'search' }: NewsPanelProps) {
               <img
                 src={lightboxImage}
                 alt="Expanded document"
-                className="max-h-[85vh] max-w-[85vw] object-contain rounded-lg"
+                className="max-h-[85vh] max-w-[85vw] rounded-lg object-contain"
               />
             </motion.div>
           </motion.div>

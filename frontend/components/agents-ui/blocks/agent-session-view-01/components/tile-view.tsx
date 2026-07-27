@@ -79,6 +79,7 @@ interface TileLayoutProps {
   audioVisualizerRadialRadius?: number;
   audioVisualizerBarCount?: number;
   avatarUrl?: string;
+  isPip?: boolean;
 }
 
 export function TileLayout({
@@ -93,18 +94,22 @@ export function TileLayout({
   audioVisualizerGridColumnCount,
   audioVisualizerWaveLineWidth,
   avatarUrl,
+  isPip = false,
 }: TileLayoutProps) {
   const { videoTrack: voiceAssistantVideoTrack } = useVoiceAssistant();
   const cameraTracks = useTracks([Track.Source.Camera]);
 
   console.log('[tile-view] voiceAssistantVideoTrack:', voiceAssistantVideoTrack);
-  console.log('[tile-view] cameraTracks:', cameraTracks.map(t => ({
-    identity: t.participant.identity,
-    source: t.source,
-    isSubscribed: t.publication?.isSubscribed,
-    trackName: t.publication?.trackName,
-    track: t.publication ? 'exists' : 'null'
-  })));
+  console.log(
+    '[tile-view] cameraTracks:',
+    cameraTracks.map((t) => ({
+      identity: t.participant.identity,
+      source: t.source,
+      isSubscribed: t.publication?.isSubscribed,
+      trackName: t.publication?.trackName,
+      track: t.publication ? 'exists' : 'null',
+    }))
+  );
 
   const agentVideoTrack = useMemo(() => {
     if (voiceAssistantVideoTrack) return voiceAssistantVideoTrack;
@@ -127,16 +132,34 @@ export function TileLayout({
   const videoHeight = agentVideoTrack?.publication.dimensions?.height ?? 0;
 
   return (
-    <div className="absolute inset-x-0 top-8 bottom-32 z-50 md:top-12 md:bottom-40">
-      <div className="relative mx-auto h-full max-w-2xl px-4 md:px-0">
-        <div className={cn(tileViewClassNames.grid)}>
+    <div
+      className={cn(
+        isPip
+          ? 'relative flex h-full w-full items-center justify-center overflow-hidden p-1'
+          : 'absolute inset-x-0 top-8 bottom-32 z-50 md:top-12 md:bottom-40'
+      )}
+    >
+      <div
+        className={cn(
+          isPip
+            ? 'relative flex h-full w-full items-center justify-center'
+            : 'relative mx-auto h-full max-w-2xl px-4 md:px-0'
+        )}
+      >
+        <div
+          className={cn(
+            !isPip && tileViewClassNames.grid,
+            isPip && 'flex h-full w-full items-center justify-center'
+          )}
+        >
           {/* Agent */}
           <div
             className={cn([
-              'grid',
-              !chatOpen && tileViewClassNames.agentChatClosed,
-              chatOpen && hasSecondTile && tileViewClassNames.agentChatOpenWithSecondTile,
-              chatOpen && !hasSecondTile && tileViewClassNames.agentChatOpenWithoutSecondTile,
+              !isPip && 'grid',
+              !isPip && !chatOpen && tileViewClassNames.agentChatClosed,
+              !isPip && chatOpen && hasSecondTile && tileViewClassNames.agentChatOpenWithSecondTile,
+              !isPip && chatOpen && !hasSecondTile && tileViewClassNames.agentChatOpenWithoutSecondTile,
+              isPip && 'flex h-full w-full items-center justify-center',
             ])}
           >
             <AnimatePresence mode="popLayout">
@@ -156,7 +179,11 @@ export function TileLayout({
                     avatarUrl
                       ? 'border-2 border-white/20 bg-black/10 ring-4 ring-white/10'
                       : 'border border-white/5 bg-black/20',
-                    chatOpen ? 'h-[90px]' : 'h-[260px] w-[260px] md:h-[300px] md:w-[300px]'
+                    isPip
+                      ? 'h-20 w-20'
+                      : chatOpen
+                        ? 'h-[90px]'
+                        : 'h-[260px] w-[260px] md:h-[300px] md:w-[300px]'
                   )}
                 >
                   {avatarUrl && (
@@ -230,14 +257,14 @@ export function TileLayout({
                   }}
                   className={cn(
                     'overflow-hidden bg-black drop-shadow-xl/80',
-                    chatOpen ? 'h-[90px]' : 'h-auto w-full'
+                    isPip ? 'h-full w-full' : chatOpen ? 'h-[90px]' : 'h-auto w-full'
                   )}
                 >
                   <VideoTrack
                     width={videoWidth}
                     height={videoHeight}
                     trackRef={agentVideoTrack}
-                    className={cn(chatOpen && 'size-[90px] object-cover')}
+                    className={cn((chatOpen || isPip) && 'size-full object-cover')}
                   />
                 </motion.div>
               )}

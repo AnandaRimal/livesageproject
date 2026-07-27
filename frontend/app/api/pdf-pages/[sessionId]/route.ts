@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +19,8 @@ export async function GET(
     // If 'latest', resolve to the most recently modified session
     if (sessionId === 'latest') {
       if (fs.existsSync(sessionsDir)) {
-        const files = fs.readdirSync(sessionsDir)
+        const files = fs
+          .readdirSync(sessionsDir)
           .filter((f) => f.endsWith('.json'))
           .map((f) => ({
             name: f,
@@ -36,7 +37,8 @@ export async function GET(
     if (!sessionId || sessionId === 'latest') {
       // Fallback: search pdf_images folders
       if (fs.existsSync(pdfImagesDir)) {
-        const dirs = fs.readdirSync(pdfImagesDir)
+        const dirs = fs
+          .readdirSync(pdfImagesDir)
           .map((d) => ({
             name: d,
             mtime: fs.statSync(path.join(pdfImagesDir, d)).mtimeMs,
@@ -58,7 +60,7 @@ export async function GET(
     if (fs.existsSync(sessionJsonFile)) {
       try {
         const meta = JSON.parse(fs.readFileSync(sessionJsonFile, 'utf-8'));
-        if (meta.pdf_name) pdfName = meta.pdf_name;
+        if (meta.pdf_name) pdfName = meta.pdf_name.replace(/^session_[^_\s]+_/, '');
         if (meta.total_pages) totalPages = meta.total_pages;
       } catch {
         /* ignore */

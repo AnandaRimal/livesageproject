@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { spawn } from 'child_process';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,12 +33,10 @@ export async function POST(req: Request) {
 
     await fs.promises.writeFile(pdfPath, buffer);
 
-    const pythonScript = path.join(myAgentDir, 'aitutor.py');
-
     // Return a ReadableStream (SSE / Chunked stream) so the frontend gets real-time progress
     const stream = new ReadableStream({
       start(controller) {
-        const sendEvent = (data: any) => {
+        const sendEvent = (data: unknown) => {
           try {
             controller.enqueue(`data: ${JSON.stringify(data)}\n\n`);
           } catch {
@@ -117,8 +115,9 @@ export async function POST(req: Request) {
         Connection: 'keep-alive',
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as Error;
     console.error('[upload-pdf route] Error:', error);
-    return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
+    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }

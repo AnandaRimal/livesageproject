@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import { useTheme } from 'next-themes';
 import { AnimatePresence, motion } from 'motion/react';
 import { useSessionContext } from '@livekit/components-react';
 import type { AppConfig } from '@/app-config';
 import { AgentSessionView_01 } from '@/components/agents-ui/blocks/agent-session-view-01';
-import { WelcomeView } from '@/components/app/welcome-view';
 import { AiTutorUploadView } from '@/components/app/ai-tutor-upload-view';
+import { WelcomeView } from '@/components/app/welcome-view';
 import type { AgentDefinition } from './app';
 
 const MotionWelcomeView = motion.create(WelcomeView);
@@ -43,8 +44,14 @@ export function ViewController({ appConfig, selectedAgent, onSelectAgent }: View
   const { resolvedTheme } = useTheme();
   const [activeUploadAgent, setActiveUploadAgent] = useState<AgentDefinition | null>(null);
 
-  // If user selected AI Tutor and room is not connected, show PDF upload view
-  const isTutorUploadMode = !isConnected && (selectedAgent?.id === 'tutor' || activeUploadAgent?.id === 'tutor');
+  useEffect(() => {
+    if (!isConnected) {
+      setActiveUploadAgent(null);
+    }
+  }, [isConnected]);
+
+  // Show upload view only when not connected and user explicitly opened it
+  const isTutorUploadMode = !isConnected && activeUploadAgent?.id === 'tutor';
 
   const handleSelectAgent = (agent: AgentDefinition) => {
     if (agent.id === 'tutor') {
@@ -69,19 +76,24 @@ export function ViewController({ appConfig, selectedAgent, onSelectAgent }: View
       )}
 
       {/* AI Tutor Upload & Setup view */}
-      {!isConnected && isTutorUploadMode && (
+      {isTutorUploadMode && (
         <MotionTutorUploadView
           key="tutor-upload"
           {...VIEW_MOTION_PROPS}
           onBack={() => setActiveUploadAgent(null)}
           onJoinClassroom={(sessionId) => {
-            const tutorAgent = activeUploadAgent || selectedAgent!;
-            onSelectAgent(tutorAgent, start, sessionId);
+            const tutorAgent = activeUploadAgent!;
+            // Clear the upload screen immediately so AnimatePresence can exit it
+            setActiveUploadAgent(null);
+            // Start the live session after a brief tick so state settles
+            setTimeout(() => {
+              onSelectAgent(tutorAgent, start, sessionId);
+            }, 50);
           }}
         />
       )}
 
-      {/* Session view */}
+      {/* Session view — shown whenever LiveKit is connected */}
       {isConnected && (
         <MotionSessionView
           key="session-view"

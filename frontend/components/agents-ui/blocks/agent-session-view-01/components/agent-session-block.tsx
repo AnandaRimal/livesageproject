@@ -2,20 +2,28 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  FileTextIcon,
-  NewspaperIcon,
-  GraduationCap,
-  X,
   BookOpen,
-  Maximize2,
   ChevronLeft,
   ChevronRight,
+  FileTextIcon,
+  GraduationCap,
   Layers,
-  Sparkles,
+  Maximize2,
+  NewspaperIcon,
   RotateCcw,
+  Sparkles,
+  X,
 } from 'lucide-react';
+
 import { AnimatePresence, type MotionProps, motion } from 'motion/react';
-import { useAgent, useDataChannel, useSessionContext, useSessionMessages } from '@livekit/components-react';
+import {
+  type AgentState,
+  type ReceivedMessage,
+  useAgent,
+  useDataChannel,
+  useSessionContext,
+  useSessionMessages,
+} from '@livekit/components-react';
 import { AgentChatTranscript } from '@/components/agents-ui/agent-chat-transcript';
 import {
   AgentControlBar,
@@ -97,13 +105,12 @@ interface PageEntry {
   pageImage: string;
 }
 
-// ── Tutor Classroom Layout ────────────────────────────────────────────────────
+// ── Tutor Classroom Layout ─────────────────────────────────────────────────────
 function TutorClassroomLayout({
   avatarUrl,
   audioVisualizerType,
   audioVisualizerColor,
   audioVisualizerColorShift,
-  audioVisualizerBarCount,
   audioVisualizerGridRowCount,
   audioVisualizerGridColumnCount,
   audioVisualizerRadialBarCount,
@@ -118,7 +125,6 @@ function TutorClassroomLayout({
   audioVisualizerType?: string;
   audioVisualizerColor?: `#${string}`;
   audioVisualizerColorShift?: number;
-  audioVisualizerBarCount?: number;
   audioVisualizerGridRowCount?: number;
   audioVisualizerGridColumnCount?: number;
   audioVisualizerRadialBarCount?: number;
@@ -126,25 +132,18 @@ function TutorClassroomLayout({
   audioVisualizerWaveLineWidth?: number;
   isConnected: boolean;
   onDisconnect: () => void;
-  messages: any[];
-  agentState: any;
+  messages: ReceivedMessage[];
+  agentState: AgentState;
 }) {
-  // All PDF pages from backend
+  // All PDF pages — ONLY from live data channel, never stale sessions
   const [allPages, setAllPages] = useState<PageEntry[]>([]);
   const [pdfName, setPdfName] = useState<string>('');
   const [totalChunks, setTotalChunks] = useState<number>(0);
   const [chunkIndex, setChunkIndex] = useState<number>(0);
-
-  // Active teaching page (pushed by teacher backend)
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
-
-  // Active slider page (user view slide, defaults to currentPageNum)
   const [activeSlidePageNum, setActiveSlidePageNum] = useState<number>(1);
   const [userIsBrowsing, setUserIsBrowsing] = useState<boolean>(false);
-
-  // View mode: 'slider' (default auto page slider stage) vs 'list' (scrollable all-pages list)
   const [viewMode, setViewMode] = useState<'slider' | 'list'>('slider');
-
   const [status, setStatus] = useState<string>('starting');
   const [lessonTitle, setLessonTitle] = useState<string>('');
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
@@ -153,31 +152,27 @@ function TutorClassroomLayout({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const thumbnailStripRef = useRef<HTMLDivElement>(null);
 
-  // Instantly fetch the latest uploaded PDF pages on mount
-  useEffect(() => {
-    fetch('/api/pdf-pages/latest')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.pages && data.pages.length > 0) {
-          setAllPages((prev) => (prev.length === 0 ? data.pages : prev));
-          if (data.pdfName) setPdfName((prev) => prev || data.pdfName);
-        }
-      })
-      .catch((err) => console.error('[TutorClassroomLayout] Error fetching PDF pages:', err));
-  }, []);
+// Helper to strip session prefix (e.g. session_1785052228939_xq2v3_) from PDF filename
+function cleanPdfName(name: string): string {
+  if (!name) return '';
+  return name.replace(/^session_[^_\s]+_/, '');
+}
 
-  // Listen to LiveKit data channel for live teacher updates
-  useDataChannel('agent-ui', (msg) => {
+  // Data channel — sole source of truth for PDF state
+  const { send } = useDataChannel('agent-ui', (msg) => {
     try {
       const data = JSON.parse(new TextDecoder().decode(msg.payload));
-
       if (data.type === 'tutor_pdf_ready') {
         if (data.allPages && data.allPages.length > 0) {
           setAllPages(data.allPages as PageEntry[]);
         }
-        if (data.pdfName) setPdfName(data.pdfName);
+        if (data.pdfName) setPdfName(cleanPdfName(data.pdfName));
         if (typeof data.totalChunks === 'number') setTotalChunks(data.totalChunks);
-      } else if (data.type === 'tutor_whiteboard') {
+      } else if (
+        data.type === 'tutor_page_loading' ||
+        data.type === 'tutor_whiteboard' ||
+        data.type === 'tutor_state'
+      ) {
         if (data.pageNum) {
           setCurrentPageNum(data.pageNum);
           if (!userIsBrowsing) setActiveSlidePageNum(data.pageNum);
@@ -186,7 +181,6 @@ function TutorClassroomLayout({
         if (data.lessonTitle) setLessonTitle(data.lessonTitle);
         if (typeof data.chunkIndex === 'number') setChunkIndex(data.chunkIndex);
         if (typeof data.totalChunks === 'number') setTotalChunks(data.totalChunks);
-
         if (data.pageImage && data.pageNum) {
           setAllPages((prev) => {
             const exists = prev.some((p) => p.pageNum === data.pageNum);
@@ -198,29 +192,25 @@ function TutorClassroomLayout({
             return prev;
           });
         }
-      } else if (data.type === 'tutor_state') {
-        if (data.pageNum) {
-          setCurrentPageNum(data.pageNum);
-          if (!userIsBrowsing) setActiveSlidePageNum(data.pageNum);
-        }
-        if (data.status) setStatus(data.status);
-        if (data.lessonTitle) setLessonTitle(data.lessonTitle);
-        if (typeof data.chunkIndex === 'number') setChunkIndex(data.chunkIndex);
-        if (typeof data.totalChunks === 'number') setTotalChunks(data.totalChunks);
       }
     } catch {
       /* ignore */
     }
   });
 
-  // Auto-slide to teaching page when teacher advances (unless user clicked another page)
-  useEffect(() => {
-    if (!userIsBrowsing) {
-      setActiveSlidePageNum(currentPageNum);
+  const handleImageLoaded = () => {
+    try {
+      const payload = new TextEncoder().encode(JSON.stringify({ type: 'page_ready' }));
+      send(payload, { reliable: true, topic: 'agent-ui' });
+    } catch {
+      /* ignore */
     }
+  };
+
+  useEffect(() => {
+    if (!userIsBrowsing) setActiveSlidePageNum(currentPageNum);
   }, [currentPageNum, userIsBrowsing]);
 
-  // Scroll to active page element in list mode
   useEffect(() => {
     if (viewMode === 'list') {
       const el = pageRefs.current[currentPageNum];
@@ -230,13 +220,20 @@ function TutorClassroomLayout({
     }
   }, [currentPageNum, viewMode]);
 
+  useEffect(() => {
+    if (thumbnailStripRef.current) {
+      const activeThumb = thumbnailStripRef.current.querySelector(
+        `[data-page="${activeSlidePageNum}"]`
+      ) as HTMLElement | null;
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, [activeSlidePageNum]);
+
   const handleSelectSlide = (pageNum: number) => {
     setActiveSlidePageNum(pageNum);
-    if (pageNum !== currentPageNum) {
-      setUserIsBrowsing(true);
-    } else {
-      setUserIsBrowsing(false);
-    }
+    setUserIsBrowsing(pageNum !== currentPageNum);
   };
 
   const handleSyncToTeacher = () => {
@@ -245,110 +242,59 @@ function TutorClassroomLayout({
   };
 
   const activePageObj = allPages.find((p) => p.pageNum === activeSlidePageNum) || allPages[0];
+  const progressPct =
+    allPages.length > 0 ? Math.round(((currentPageNum - 1) / allPages.length) * 100) : 0;
 
-  const statusColors: Record<string, string> = {
-    starting: 'bg-amber-500',
-    teaching: 'bg-violet-500',
-    advancing: 'bg-cyan-500',
-    complete: 'bg-emerald-500',
-  };
-  const dotColor = statusColors[status] ?? 'bg-blue-500';
+  // Suppress unused var warnings for status/lessonTitle/chunkIndex/totalChunks
+  void status;
+  void lessonTitle;
+  void chunkIndex;
+  void totalChunks;
 
   return (
-    <div className="absolute inset-0 flex overflow-hidden">
-      {/* ── LEFT PANEL: Live speaking transcript ── */}
-      <div className="hidden w-[260px] shrink-0 flex-col border-r border-white/10 bg-black/50 backdrop-blur-xl lg:flex">
-        {/* Header */}
-        <div className="flex items-center gap-2.5 border-b border-white/10 px-4 py-3 bg-violet-950/30 shrink-0">
-          <span className="relative flex size-2">
-            <span className={cn('absolute inline-flex h-full w-full animate-ping rounded-full opacity-75', dotColor)} />
-            <span className={cn('relative inline-flex size-2 rounded-full', dotColor)} />
-          </span>
-          <h3 className="text-[11px] font-bold tracking-widest text-violet-300 uppercase">
-            Live Session
-          </h3>
-        </div>
-
-        {/* Lesson meta & progress */}
-        <div className="shrink-0 px-4 py-3 space-y-2 border-b border-white/10 bg-violet-950/10">
-          <div className="flex items-center justify-between">
-            <p className="text-[10px] text-violet-400 font-semibold uppercase tracking-wider flex items-center gap-1">
-              <GraduationCap className="size-3" /> Professor Sage
-            </p>
-            {currentPageNum > 0 && (
-              <span className="rounded-md bg-violet-500/20 px-2 py-0.5 text-[10px] font-mono text-violet-300 border border-violet-500/20">
-                Page {currentPageNum}
-              </span>
-            )}
+    <div className="absolute inset-0 flex flex-col overflow-hidden bg-[#0b0b18] text-white">
+      {/* ══ TOP NAV BAR ══ */}
+      <div className="z-40 flex h-14 shrink-0 items-center justify-between border-b border-white/[0.06] bg-[#0f0f20]/95 px-4 shadow-lg backdrop-blur-xl">
+        {/* Left: Brand */}
+        <div className="flex shrink-0 items-center gap-2.5">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg">
+            <GraduationCap className="size-4 text-white" />
           </div>
-          {lessonTitle && (
-            <p className="text-xs font-bold text-slate-100 line-clamp-2">{lessonTitle}</p>
-          )}
-          {pdfName && (
-            <p className="text-[10px] text-slate-500 truncate" title={pdfName}>
-              📄 {pdfName}
-            </p>
-          )}
-          {totalChunks > 0 && (
-            <div>
-              <div className="flex justify-between text-[9px] text-slate-500 mb-1 font-mono">
-                <span>Progress</span>
-                <span>{chunkIndex}/{totalChunks}</span>
-              </div>
-              <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 transition-all duration-700"
-                  style={{ width: `${Math.min(100, (chunkIndex / totalChunks) * 100)}%` }}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Live chat transcript — what model is saying */}
-        <div className="relative flex-1 overflow-hidden">
-          <Fade top className="absolute inset-x-0 top-0 z-10 h-8" />
-          <AgentChatTranscript
-            agentState={agentState}
-            messages={messages}
-            className="h-full [&_.is-user>div]:rounded-[14px] [&>div>div]:px-3 [&>div>div]:pt-6 text-xs"
-          />
-          <Fade bottom className="absolute inset-x-0 bottom-0 z-10 h-8" />
-        </div>
-      </div>
-
-      {/* ── CENTER: PDF Auto-Slider Stage ── */}
-      <div className="relative flex flex-1 flex-col overflow-hidden bg-zinc-950">
-        {/* Top Toolbar: View mode toggle & Sync button */}
-        <div className="flex items-center justify-between border-b border-white/10 px-4 py-2 bg-black/40 backdrop-blur-md z-30 shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-violet-400 uppercase tracking-wider flex items-center gap-1.5">
-              <BookOpen className="size-3.5" /> {pdfName || 'Textbook Stage'}
+          <div className="flex flex-col leading-none">
+            <span className="text-[13px] font-extrabold tracking-tight text-white">LiveSage</span>
+            <span className="text-[9px] font-semibold tracking-widest text-violet-400 uppercase">
+              AI Tutor
             </span>
-            {allPages.length > 0 && (
-              <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-mono text-slate-400">
-                {allPages.length} pages
-              </span>
-            )}
           </div>
+        </div>
 
-          <div className="flex items-center gap-2">
-            {/* Sync to Teacher button (if browsing away) */}
-            {userIsBrowsing && activeSlidePageNum !== currentPageNum && (
-              <button
-                onClick={handleSyncToTeacher}
-                className="flex items-center gap-1.5 rounded-full bg-violet-600 px-3 py-1 text-[10px] font-bold text-white shadow-lg hover:bg-violet-500 transition cursor-pointer animate-pulse"
-              >
-                <RotateCcw className="size-3" /> Sync to Teacher (Page {currentPageNum})
-              </button>
-            )}
+        {/* Center: page count only (no filename) */}
+        {allPages.length > 0 && (
+          <div className="mx-4 flex min-w-0 items-center gap-2">
+            <BookOpen className="size-3.5 shrink-0 text-violet-400" />
+            <span className="text-[11px] font-semibold text-slate-300">AI Tutor Lesson</span>
+            <span className="shrink-0 rounded-full border border-slate-700 bg-slate-800/80 px-2.5 py-0.5 font-mono text-[10px] font-bold text-slate-300">
+              {allPages.length} pages
+            </span>
+          </div>
+        )}
 
-            {/* View Mode Toggle */}
-            <div className="flex items-center rounded-lg bg-white/5 p-1 border border-white/10">
+        {/* Right: sync + view toggle + avatar */}
+        <div className="flex shrink-0 items-center gap-2">
+          {userIsBrowsing && activeSlidePageNum !== currentPageNum && (
+            <button
+              onClick={handleSyncToTeacher}
+              className="flex animate-pulse cursor-pointer items-center gap-1.5 rounded-full bg-violet-600 px-3 py-1.5 text-[11px] font-bold text-white shadow-lg transition hover:bg-violet-500"
+            >
+              <RotateCcw className="size-3" /> Sync
+            </button>
+          )}
+          {allPages.length > 0 && (
+            <div className="flex items-center gap-0.5 rounded-xl border border-white/10 bg-white/5 p-1">
               <button
                 onClick={() => setViewMode('slider')}
                 className={cn(
-                  'flex items-center gap-1 rounded-md px-2.5 py-1 text-[10px] font-semibold transition cursor-pointer',
+                  'flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-semibold transition-all',
                   viewMode === 'slider'
                     ? 'bg-violet-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-white'
@@ -359,7 +305,7 @@ function TutorClassroomLayout({
               <button
                 onClick={() => setViewMode('list')}
                 className={cn(
-                  'flex items-center gap-1 rounded-md px-2.5 py-1 text-[10px] font-semibold transition cursor-pointer',
+                  'flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-semibold transition-all',
                   viewMode === 'list'
                     ? 'bg-violet-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-white'
@@ -368,64 +314,124 @@ function TutorClassroomLayout({
                 <Layers className="size-3" /> All Pages
               </button>
             </div>
+          )}
+          <div className="relative size-8 overflow-hidden rounded-full border-2 border-violet-500/50">
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-600 to-indigo-700">
+              <GraduationCap className="size-4 text-white" />
+            </div>
+            <span className="absolute right-0 bottom-0 size-2.5 rounded-full border-2 border-[#0f0f20] bg-emerald-500" />
+          </div>
+        </div>
+      </div>
+
+      {/* ══ MAIN BODY ══ */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* ── LEFT SIDEBAR ── */}
+        <div className="hidden w-[220px] shrink-0 flex-col border-r border-white/[0.06] bg-[#0f0f20]/90 lg:flex">
+          {/* LIVE SESSION header */}
+          <div className="flex shrink-0 items-center gap-2 border-b border-white/[0.06] px-4 py-3">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex size-2 rounded-full bg-red-500" />
+            </span>
+            <span className="text-[10px] font-extrabold tracking-widest text-white uppercase">
+              Live Session
+            </span>
+          </div>
+
+
+          {/* Progress */}
+          {allPages.length > 0 && (
+            <div className="shrink-0 border-b border-white/[0.06] px-4 py-3">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-[11px] font-bold text-white">Progress</span>
+                <span className="font-mono text-[10px] font-semibold text-slate-400">
+                  Page {currentPageNum} of {allPages.length}
+                </span>
+              </div>
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 transition-all duration-700"
+                  style={{ width: `${progressPct}%` }}
+                />
+              </div>
+              <span className="mt-1.5 block text-[9px] font-semibold text-slate-500">
+                {progressPct}% Complete
+              </span>
+            </div>
+          )}
+
+          {/* Class Notes / Transcript */}
+          <div className="flex flex-1 flex-col overflow-hidden">
+            <div className="flex shrink-0 items-center gap-1.5 border-b border-white/[0.06] px-4 py-2">
+              <BookOpen className="size-3 text-violet-400" />
+              <span className="text-[10px] font-bold text-white">Class Notes</span>
+            </div>
+            {/* AgentChatTranscript uses StickToBottom internally — auto-scrolls to latest message */}
+            <AgentChatTranscript
+              agentState={agentState}
+              messages={messages}
+              className="flex-1 text-[11px] leading-relaxed text-slate-300 [&_.is-user>div]:rounded-xl [&_.is-user>div]:bg-violet-900/40 [&_.is-user>div]:px-2 [&_.is-user>div]:py-1 [&>div>div]:px-2 [&>div>div]:pt-2"
+            />
           </div>
         </div>
 
-        {/* ── STAGE CONTENT ── */}
-        {allPages.length === 0 ? (
-          /* Placeholder before PDF loads */
-          <div className="flex-1 flex flex-col items-center justify-center gap-6 text-center p-6">
-            <motion.div
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="flex size-24 items-center justify-center rounded-3xl bg-violet-950/40 border border-violet-500/20"
-            >
-              <BookOpen className="size-12 text-violet-400/70" />
-            </motion.div>
-            <div>
-              <p className="text-xl font-bold text-slate-200">PDF Stage Ready</p>
-              <p className="text-sm text-slate-500 mt-2 max-w-xs">
-                {pdfName ? `Loading "${pdfName}"...` : 'Waiting for Professor Sage to start the lesson...'}
-              </p>
+
+        {/* ── CENTER: PDF STAGE ── */}
+        <div className="relative flex flex-1 flex-col overflow-hidden bg-[#0b0b18]">
+          {allPages.length === 0 ? (
+            <div className="flex flex-1 flex-col items-center justify-center gap-6 p-6 text-center">
+              <motion.div
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                className="flex size-24 items-center justify-center rounded-3xl border border-violet-500/30 bg-violet-950/40 shadow-xl"
+              >
+                <BookOpen className="size-12 text-violet-400" />
+              </motion.div>
+              <div>
+                <p className="text-xl font-bold text-white">PDF Stage Ready</p>
+                <p className="mt-2 max-w-xs text-sm font-medium text-slate-400">
+                  {pdfName
+                    ? `Loading "${cleanPdfName(pdfName)}"...`
+                    : 'Waiting for Professor Sage to start the lesson...'}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="size-2 animate-bounce rounded-full bg-violet-500 [animation-delay:0ms]" />
+                <span className="size-2 animate-bounce rounded-full bg-violet-400 [animation-delay:150ms]" />
+                <span className="size-2 animate-bounce rounded-full bg-violet-300 [animation-delay:300ms]" />
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="size-2 animate-bounce rounded-full bg-violet-500 [animation-delay:0ms]" />
-              <span className="size-2 animate-bounce rounded-full bg-violet-400 [animation-delay:150ms]" />
-              <span className="size-2 animate-bounce rounded-full bg-violet-300 [animation-delay:300ms]" />
-            </div>
-          </div>
-        ) : viewMode === 'slider' ? (
-          /* ── MODE A: AUTO PAGE SLIDER STAGE ── */
-          <div className="relative flex-1 flex flex-col items-center justify-center overflow-hidden p-2 pb-24">
-            {/* Slide Stage Container */}
-            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+          ) : viewMode === 'slider' ? (
+            <div className="relative flex flex-1 items-center justify-center overflow-hidden p-4 pb-[100px]">
               <AnimatePresence mode="wait">
                 {activePageObj && (
                   <motion.div
                     key={activePageObj.pageNum}
-                    initial={{ opacity: 0, x: 50, scale: 0.96 }}
+                    initial={{ opacity: 0, x: 40, scale: 0.97 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: -50, scale: 0.96 }}
-                    transition={{ duration: 0.35, ease: 'easeInOut' }}
-                    className="relative max-h-full max-w-full flex items-center justify-center"
+                    exit={{ opacity: 0, x: -40, scale: 0.97 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="relative flex max-h-full max-w-full items-center justify-center"
                   >
-                    {/* Render active slide page image */}
                     <img
                       src={`/api/pdf-image/${activePageObj.pageImage}`}
                       alt={`PDF Page ${activePageObj.pageNum}`}
-                      className="max-h-[72vh] max-w-full rounded-2xl object-contain shadow-2xl border border-white/10 bg-white"
-                      style={{ boxShadow: '0 0 50px rgba(139,92,246,0.2)' }}
+                      onLoad={handleImageLoaded}
+                      onError={handleImageLoaded}
+                      className="max-h-[calc(100vh-230px)] max-w-full rounded-2xl border border-slate-700/40 bg-white object-contain shadow-2xl"
+                      style={{ boxShadow: '0 0 60px rgba(109,40,217,0.3)' }}
                     />
 
-                    {/* Page Badges */}
-                    <div className="absolute top-3 left-3 flex items-center gap-2 z-20">
+                    {/* Teaching / Browsing badge */}
+                    <div className="absolute top-3 left-3 z-20">
                       {activePageObj.pageNum === currentPageNum ? (
-                        <span className="flex items-center gap-1.5 rounded-full bg-violet-600/90 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-md border border-violet-400/40">
-                          <span className="size-1.5 animate-ping rounded-full bg-white" />
+                        <span className="flex items-center gap-1.5 rounded-lg border border-violet-500/30 bg-[#160d30]/90 px-3 py-1.5 text-[11px] font-bold text-violet-300 shadow-md backdrop-blur-sm">
+                          <span className="size-1.5 animate-ping rounded-full bg-violet-400" />
                           Teaching Page {activePageObj.pageNum}
                         </span>
                       ) : (
-                        <span className="rounded-full bg-slate-900/80 px-3 py-1 text-[11px] font-bold text-amber-300 backdrop-blur-md border border-amber-500/30">
+                        <span className="rounded-lg border border-amber-500/30 bg-[#1a1000]/90 px-3 py-1.5 text-[11px] font-bold text-amber-300 shadow-md backdrop-blur-sm">
                           Browsing Page {activePageObj.pageNum}
                         </span>
                       )}
@@ -434,7 +440,7 @@ function TutorClassroomLayout({
                     {/* Expand button */}
                     <button
                       onClick={() => setExpandedImage(`/api/pdf-image/${activePageObj.pageImage}`)}
-                      className="absolute top-3 right-3 z-20 rounded-xl bg-black/70 border border-white/10 p-2 text-slate-300 hover:text-white hover:border-white/30 transition backdrop-blur-md cursor-pointer"
+                      className="absolute top-3 right-3 z-20 cursor-pointer rounded-xl border border-white/10 bg-[#0b0b18]/80 p-2 text-slate-300 shadow-md backdrop-blur-md transition hover:bg-[#160d30] hover:text-white"
                     >
                       <Maximize2 className="size-4" />
                     </button>
@@ -442,168 +448,194 @@ function TutorClassroomLayout({
                 )}
               </AnimatePresence>
 
-              {/* Prev Slide Button */}
               {activeSlidePageNum > 1 && (
                 <button
                   onClick={() => handleSelectSlide(activeSlidePageNum - 1)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 z-30 flex size-11 items-center justify-center rounded-full bg-black/70 border border-white/20 text-white shadow-xl hover:bg-violet-600 hover:border-violet-400 transition cursor-pointer backdrop-blur-md"
-                  title="Previous Page"
+                  className="absolute top-1/2 left-2 z-30 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-[#0f0f20]/90 text-white shadow-xl backdrop-blur-md transition hover:border-violet-400 hover:bg-violet-600"
                 >
-                  <ChevronLeft className="size-6" />
+                  <ChevronLeft className="size-5" />
                 </button>
               )}
 
-              {/* Next Slide Button */}
               {activeSlidePageNum < allPages.length && (
                 <button
                   onClick={() => handleSelectSlide(activeSlidePageNum + 1)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 z-30 flex size-11 items-center justify-center rounded-full bg-black/70 border border-white/20 text-white shadow-xl hover:bg-violet-600 hover:border-violet-400 transition cursor-pointer backdrop-blur-md"
-                  title="Next Page"
+                  className="absolute top-1/2 right-2 z-30 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-[#0f0f20]/90 text-white shadow-xl backdrop-blur-md transition hover:border-violet-400 hover:bg-violet-600"
                 >
-                  <ChevronRight className="size-6" />
+                  <ChevronRight className="size-5" />
                 </button>
               )}
             </div>
-
-            {/* Bottom Page Thumbnails Slider Carousel */}
+          ) : (
             <div
-              ref={thumbnailStripRef}
-              className="absolute bottom-20 inset-x-4 z-30 flex items-center justify-center gap-2 overflow-x-auto py-2 px-4 rounded-2xl bg-black/70 border border-white/10 backdrop-blur-xl"
-              style={{ scrollbarWidth: 'none' }}
+              ref={scrollContainerRef}
+              className="flex-1 space-y-6 overflow-x-hidden overflow-y-auto px-4 pt-4 pb-6"
+              style={{ scrollbarWidth: 'thin', scrollbarColor: '#7c3aed40 transparent' }}
             >
               {allPages.map(({ pageNum, pageImage }) => {
-                const isActive = pageNum === activeSlidePageNum;
-                const isTeaching = pageNum === currentPageNum;
+                const isCurrentPage = pageNum === currentPageNum;
                 return (
-                  <button
+                  <motion.div
                     key={pageNum}
-                    onClick={() => handleSelectSlide(pageNum)}
+                    ref={(el) => {
+                      pageRefs.current[pageNum] = el;
+                    }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: pageNum * 0.03 }}
                     className={cn(
-                      'relative shrink-0 rounded-lg overflow-hidden border-2 transition-all cursor-pointer group',
-                      isActive
-                        ? 'border-violet-500 scale-110 shadow-[0_0_15px_rgba(139,92,246,0.6)]'
-                        : 'border-white/10 opacity-50 hover:opacity-100 hover:border-white/30'
+                      'relative mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border bg-white transition-all duration-500',
+                      isCurrentPage
+                        ? 'border-violet-500 shadow-[0_0_40px_rgba(139,92,246,0.3)]'
+                        : 'border-slate-700 opacity-70 hover:opacity-100'
                     )}
                   >
+                    {isCurrentPage && (
+                      <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 rounded-full border border-violet-400/40 bg-violet-600 px-3 py-1 text-[11px] font-bold text-white shadow-md">
+                        <span className="size-1.5 animate-ping rounded-full bg-white" />
+                        Teaching Now
+                      </div>
+                    )}
+                    <div className="absolute top-3 right-3 z-20 rounded-lg border border-slate-700 bg-slate-900/90 px-2.5 py-1 font-mono text-[11px] font-bold text-slate-200 shadow-sm backdrop-blur-sm">
+                      Page {pageNum}
+                    </div>
+                    <button
+                      onClick={() => setExpandedImage(`/api/pdf-image/${pageImage}`)}
+                      className="absolute right-3 bottom-3 z-20 cursor-pointer rounded-lg border border-slate-700 bg-slate-900/90 p-1.5 text-slate-300 shadow-sm backdrop-blur-sm hover:text-white"
+                    >
+                      <Maximize2 className="size-3.5" />
+                    </button>
                     <img
                       src={`/api/pdf-image/${pageImage}`}
-                      alt={`Thumb ${pageNum}`}
-                      className="h-12 w-9 object-cover bg-white"
+                      alt={`PDF Page ${pageNum}`}
+                      className="w-full bg-white object-contain"
+                      loading={pageNum <= 3 ? 'eager' : 'lazy'}
                     />
-                    <span className="absolute bottom-0 inset-x-0 bg-black/80 text-[9px] font-mono text-center text-slate-200">
-                      {pageNum}
-                    </span>
-                    {isTeaching && (
-                      <span className="absolute top-0 right-0 size-2 rounded-full bg-violet-400 animate-pulse border border-black" />
-                    )}
-                  </button>
+                  </motion.div>
                 );
               })}
             </div>
-          </div>
-        ) : (
-          /* ── MODE B: ALL PAGES LIST VIEW ── */
-          <div
-            ref={scrollContainerRef}
-            className="flex-1 overflow-y-auto overflow-x-hidden px-4 pt-4 pb-24 space-y-6"
-            style={{ scrollbarWidth: 'thin', scrollbarColor: '#7c3aed40 transparent' }}
-          >
-            {allPages.map(({ pageNum, pageImage }) => {
-              const isCurrentPage = pageNum === currentPageNum;
-              return (
-                <motion.div
-                  key={pageNum}
-                  ref={(el) => {
-                    pageRefs.current[pageNum] = el;
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: pageNum * 0.05 }}
-                  className={cn(
-                    'relative mx-auto rounded-2xl overflow-hidden transition-all duration-500',
-                    'max-w-3xl w-full',
-                    isCurrentPage
-                      ? 'ring-2 ring-violet-500 ring-offset-2 ring-offset-zinc-950 shadow-[0_0_40px_rgba(139,92,246,0.3)]'
-                      : 'opacity-60 hover:opacity-90'
-                  )}
-                >
-                  {isCurrentPage && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="absolute top-3 left-3 z-20 flex items-center gap-1.5 rounded-full bg-violet-600/90 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-sm border border-violet-400/40"
+          )}
+
+          {/* ══ BOTTOM STRIP + CONTROLS ══ */}
+          {allPages.length > 0 && viewMode === 'slider' && (
+            <div className="absolute inset-x-0 bottom-0 z-40 border-t border-white/[0.06] bg-[#0f0f20]/95 backdrop-blur-xl">
+              <div
+                ref={thumbnailStripRef}
+                className="flex items-center gap-1.5 overflow-x-auto px-4 py-2"
+                style={{ scrollbarWidth: 'none' }}
+              >
+                {allPages.map(({ pageNum, pageImage }) => {
+                  const isActive = pageNum === activeSlidePageNum;
+                  const isTeaching = pageNum === currentPageNum;
+                  return (
+                    <button
+                      key={pageNum}
+                      data-page={pageNum}
+                      onClick={() => handleSelectSlide(pageNum)}
+                      className={cn(
+                        'group relative shrink-0 cursor-pointer overflow-hidden rounded-lg border-2 transition-all duration-200',
+                        isActive
+                          ? 'scale-110 border-violet-500 shadow-[0_0_14px_rgba(139,92,246,0.6)]'
+                          : isTeaching
+                            ? 'border-violet-400/40 opacity-80'
+                            : 'border-white/10 opacity-50 hover:border-white/30 hover:opacity-90'
+                      )}
                     >
-                      <span className="size-1.5 animate-ping rounded-full bg-white" />
-                      Teaching Now
-                    </motion.div>
-                  )}
+                      <img
+                        src={`/api/pdf-image/${pageImage}`}
+                        alt={`Thumb ${pageNum}`}
+                        className="h-10 w-8 bg-white object-cover"
+                      />
+                      <span className="absolute inset-x-0 bottom-0 bg-[#0b0b18]/90 text-center font-mono text-[8px] font-bold text-slate-300">
+                        {pageNum}
+                      </span>
+                      {isTeaching && (
+                        <span className="absolute top-0.5 right-0.5 size-1.5 animate-pulse rounded-full bg-violet-400" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex items-center justify-center pt-0.5 pb-2">
+                <AgentControlBar
+                  variant="livekit"
+                  controls={{
+                    leave: true,
+                    microphone: false,
+                    chat: false,
+                    camera: false,
+                    screenShare: false,
+                  }}
+                  isChatOpen={false}
+                  isConnected={isConnected}
+                  onDisconnect={onDisconnect}
+                  onIsChatOpenChange={() => {}}
+                />
+              </div>
+            </div>
+          )}
 
-                  <div className="absolute top-3 right-3 z-20 rounded-lg bg-black/70 border border-white/10 px-2.5 py-1 text-[11px] font-mono font-bold text-slate-300 backdrop-blur-sm">
-                    Page {pageNum}
-                  </div>
+          {(allPages.length === 0 || viewMode === 'list') && (
+            <motion.div {...BOTTOM_VIEW_MOTION_PROPS} className="absolute inset-x-0 bottom-0 z-50">
+              <div className="relative mx-auto max-w-2xl rounded-t-2xl border-t border-white/[0.06] bg-[#0f0f20]/95 pb-3 shadow-2xl backdrop-blur-md md:pb-8">
+                <AgentControlBar
+                  variant="livekit"
+                  controls={{
+                    leave: true,
+                    microphone: false,
+                    chat: false,
+                    camera: false,
+                    screenShare: false,
+                  }}
+                  isChatOpen={false}
+                  isConnected={isConnected}
+                  onDisconnect={onDisconnect}
+                  onIsChatOpenChange={() => {}}
+                />
+              </div>
+            </motion.div>
+          )}
 
-                  <button
-                    onClick={() => setExpandedImage(`/api/pdf-image/${pageImage}`)}
-                    className="absolute bottom-3 right-3 z-20 rounded-lg bg-black/70 border border-white/10 p-1.5 text-slate-400 hover:text-white transition cursor-pointer backdrop-blur-sm"
-                  >
-                    <Maximize2 className="size-3.5" />
-                  </button>
-
-                  <img
-                    src={`/api/pdf-image/${pageImage}`}
-                    alt={`PDF Page ${pageNum}`}
-                    className="w-full object-contain bg-white"
-                    loading={pageNum <= 3 ? 'eager' : 'lazy'}
-                  />
-                </motion.div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* ── Small Professor Sage PIP Avatar — bottom-right ── */}
-        <div className="absolute bottom-24 right-4 z-30 w-44 h-36 sm:w-52 sm:h-44 rounded-2xl border border-violet-500/40 bg-black/90 shadow-2xl overflow-hidden backdrop-blur-xl hover:border-violet-400/70 transition-all">
-          <div className="absolute top-2 left-2 z-40 rounded-full bg-violet-600/70 px-2 py-0.5 text-[9px] font-bold text-violet-100 backdrop-blur-sm border border-violet-400/30">
-            Professor Sage
-          </div>
-          <div className="absolute top-2 right-2 z-40 flex items-center gap-0.5">
-            <span className="size-1.5 animate-ping rounded-full bg-violet-400 opacity-80" />
-            <span className="size-1.5 rounded-full bg-violet-400" />
-          </div>
-          <div className="h-full w-full">
-            <TileLayout
-              chatOpen={false}
-              avatarUrl={avatarUrl}
-              audioVisualizerType={audioVisualizerType as any}
-              audioVisualizerColor={audioVisualizerColor}
-              audioVisualizerColorShift={audioVisualizerColorShift}
-              audioVisualizerBarCount={10}
-              audioVisualizerRadialBarCount={audioVisualizerRadialBarCount}
-              audioVisualizerRadialRadius={audioVisualizerRadialRadius}
-              audioVisualizerGridRowCount={audioVisualizerGridRowCount}
-              audioVisualizerGridColumnCount={audioVisualizerGridColumnCount}
-              audioVisualizerWaveLineWidth={audioVisualizerWaveLineWidth}
-            />
+          {/* ══ AI AVATAR PIP — Professor Sage lip-sync window ══ */}
+          <div
+            className={cn(
+              'absolute right-4 z-40 overflow-hidden rounded-2xl border-2 border-violet-500/60 bg-[#0c0a1d]/95 shadow-[0_8px_48px_rgba(124,58,237,0.35)] backdrop-blur-xl transition-all duration-300',
+              allPages.length > 0 && viewMode === 'slider'
+                ? 'bottom-20 h-48 w-64 md:h-56 md:w-72'
+                : 'bottom-16 h-48 w-64 md:h-56 md:w-72'
+            )}
+          >
+            {/* Glowing border accent */}
+            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-violet-400/20" />
+            {/* Live badge */}
+            <div className="absolute top-2 left-2.5 z-40 flex items-center gap-1.5 rounded-full border border-violet-400/40 bg-[#0b0b18]/90 px-2.5 py-1 text-[9px] font-bold text-violet-300 backdrop-blur-md shadow-md">
+              <span className="size-1.5 animate-pulse rounded-full bg-violet-400" />
+              Professor Sage · Live
+            </div>
+            <div className="h-full w-full">
+              <TileLayout
+                isPip={true}
+                chatOpen={false}
+                avatarUrl={avatarUrl}
+                audioVisualizerType={
+                  audioVisualizerType as 'bar' | 'wave' | 'grid' | 'radial' | 'aura'
+                }
+                audioVisualizerColor={audioVisualizerColor ?? '#7c3aed'}
+                audioVisualizerColorShift={audioVisualizerColorShift}
+                audioVisualizerBarCount={10}
+                audioVisualizerRadialBarCount={audioVisualizerRadialBarCount}
+                audioVisualizerRadialRadius={audioVisualizerRadialRadius}
+                audioVisualizerGridRowCount={audioVisualizerGridRowCount}
+                audioVisualizerGridColumnCount={audioVisualizerGridColumnCount}
+                audioVisualizerWaveLineWidth={audioVisualizerWaveLineWidth}
+              />
+            </div>
           </div>
         </div>
-
-        {/* Bottom control bar */}
-        <motion.div {...BOTTOM_VIEW_MOTION_PROPS} className="absolute inset-x-0 bottom-0 z-50">
-          <div className="bg-background/70 relative mx-auto max-w-2xl rounded-t-2xl pb-3 backdrop-blur-md md:pb-10">
-            <Fade bottom className="absolute inset-x-0 top-0 h-4 -translate-y-full" />
-            <AgentControlBar
-              variant="livekit"
-              controls={{ leave: true, microphone: true, chat: false, camera: false, screenShare: false }}
-              isChatOpen={false}
-              isConnected={isConnected}
-              onDisconnect={onDisconnect}
-              onIsChatOpenChange={() => {}}
-            />
-          </div>
-        </motion.div>
       </div>
 
-      {/* Full-screen page modal */}
+      {/* Full-screen image modal */}
       <AnimatePresence>
         {expandedImage && (
           <motion.div
@@ -619,7 +651,7 @@ function TutorClassroomLayout({
             >
               <button
                 onClick={() => setExpandedImage(null)}
-                className="absolute top-4 right-4 z-10 flex size-9 items-center justify-center rounded-full bg-black/70 text-white hover:bg-black transition cursor-pointer"
+                className="absolute top-4 right-4 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full bg-black/70 text-white transition hover:bg-black"
               >
                 <X className="size-5" />
               </button>
@@ -682,7 +714,35 @@ export function AgentSessionView_01({
     }
   }, [messages]);
 
-  // AI Tutor gets its own purpose-built layout
+  // ── Block microphone for AI Tutor (output-only) ─────────────────────────────
+  // The mic button is already hidden, but we must also mute the actual LiveKit
+  // audio track so no user audio is sent to the backend at all.
+  useEffect(() => {
+    if (agentId !== 'tutor') return;
+    const room = session.room;
+    if (!room) return;
+
+    const muteMic = async () => {
+      try {
+        // Ensure the mic track is disabled/muted at the LiveKit level
+        await room.localParticipant.setMicrophoneEnabled(false);
+        console.log('[AiTutor] Microphone muted — tutor is output-only.');
+      } catch (err) {
+        console.warn('[AiTutor] Could not mute mic:', err);
+      }
+    };
+
+    muteMic();
+
+    // Re-mute if connection state changes (e.g. reconnect)
+    room.on('connected', muteMic);
+    return () => {
+      room.off('connected', muteMic);
+    };
+  }, [agentId, session.room]);
+
+
+
   if (agentId === 'tutor') {
     return (
       <section
@@ -695,7 +755,6 @@ export function AgentSessionView_01({
           audioVisualizerType={audioVisualizerType}
           audioVisualizerColor={audioVisualizerColor}
           audioVisualizerColorShift={audioVisualizerColorShift}
-          audioVisualizerBarCount={audioVisualizerBarCount}
           audioVisualizerGridRowCount={audioVisualizerGridRowCount}
           audioVisualizerGridColumnCount={audioVisualizerGridColumnCount}
           audioVisualizerRadialBarCount={audioVisualizerRadialBarCount}
@@ -711,7 +770,6 @@ export function AgentSessionView_01({
     );
   }
 
-  // Standard agent layout
   return (
     <section
       ref={ref}
@@ -719,14 +777,15 @@ export function AgentSessionView_01({
       {...props}
     >
       <div className="absolute inset-0 flex">
-        {/* LEFT: Chat Transcript */}
         <div className="hidden w-[300px] shrink-0 flex-col border-r border-white/5 lg:flex">
           <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3">
             <span className="relative flex size-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-cyan-500" />
             </span>
-            <h3 className="gradient-text text-[10px] font-bold tracking-widest uppercase">Live Transcript</h3>
+            <h3 className="gradient-text text-[10px] font-bold tracking-widest uppercase">
+              Live Transcript
+            </h3>
           </div>
           <div className="relative flex-1 overflow-hidden">
             <Fade top className="absolute inset-x-0 top-0 z-10 h-8" />
@@ -738,7 +797,6 @@ export function AgentSessionView_01({
           </div>
         </div>
 
-        {/* CENTER */}
         <div className="relative flex flex-1 flex-col">
           <Fade top className="absolute inset-x-4 top-0 z-10 h-40" />
           <div className="absolute top-0 bottom-[135px] flex w-full flex-col md:bottom-[170px] lg:hidden">
@@ -773,7 +831,10 @@ export function AgentSessionView_01({
             audioVisualizerGridColumnCount={audioVisualizerGridColumnCount}
             audioVisualizerWaveLineWidth={audioVisualizerWaveLineWidth}
           />
-          <motion.div {...BOTTOM_VIEW_MOTION_PROPS} className="absolute inset-x-3 bottom-0 z-50 md:inset-x-12">
+          <motion.div
+            {...BOTTOM_VIEW_MOTION_PROPS}
+            className="absolute inset-x-3 bottom-0 z-50 md:inset-x-12"
+          >
             {isPreConnectBufferEnabled && (
               <AnimatePresence>
                 {messages.length === 0 && (
@@ -803,7 +864,6 @@ export function AgentSessionView_01({
           </motion.div>
         </div>
 
-        {/* RIGHT: News */}
         <div className="hidden w-[320px] shrink-0 flex-col gap-3 border-l border-white/5 p-3 xl:flex">
           <div className="flex-1 overflow-hidden">
             <NewsPanel agentId={agentId} />

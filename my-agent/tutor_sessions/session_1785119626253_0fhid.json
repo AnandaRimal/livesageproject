@@ -1,0 +1,708 @@
+{
+  "session_id": "session_1785119626253_0fhid",
+  "pdf_name": "0fhid_1bit-llms.pdf",
+  "total_pages": 33,
+  "total_chunks": 33,
+  "collection_name": "tutor_session_1785119626253_0fhid",
+  "created_at": 1785119646.0433211,
+  "chunks": [
+    {
+      "id": "chunk_0000",
+      "text": "William Henry Gates III I don\u2019t think there\u2019s anything unique about human intelligence. All the neurons in the brain that make up perceptions and emotions operate in a binary fashion.",
+      "page_num": 1,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_1.png"
+    },
+    {
+      "id": "chunk_0001",
+      "text": "Biological neuron 1-bit LLM 0 1 -1 1 (Binary) (Binary)",
+      "page_num": 2,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page2_img1.png",
+        "session_1785119626253_0fhid/page2_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_2.png"
+    },
+    {
+      "id": "chunk_0002",
+      "text": "1.58-bit LLM (Ternary) Biological neuron 0 1 (Binary) 1-bit LLM -1 1 (Binary) -1 0 1 log2(3) = 1.58",
+      "page_num": 3,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page3_img1.png",
+        "session_1785119626253_0fhid/page3_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_3.png"
+    },
+    {
+      "id": "chunk_0003",
+      "text": "Why so extreme? \u2705 faster inference \u2705 lower memory usage 16-bit weight 1-bit weight quantization",
+      "page_num": 4,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page4_img1.png",
+        "session_1785119626253_0fhid/page4_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_4.png"
+    },
+    {
+      "id": "chunk_0004",
+      "text": "16-bit weight 1-bit weight quantization \u2705 faster inference \u2705 lower memory usage Why so extreme?",
+      "page_num": 5,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page5_img1.png",
+        "session_1785119626253_0fhid/page5_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_5.png"
+    },
+    {
+      "id": "chunk_0005",
+      "text": "\u2705 faster inference \u2705 lower memory usage Why so extreme? 9x speedup on GPU (NVIDIA A100) 6x speedup on CPU (Intel i7)",
+      "page_num": 6,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page6_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_6.png"
+    },
+    {
+      "id": "chunk_0006",
+      "text": "1-bit: the prequel BinaryBERT BiBERT TernaryBERT BitNet LLMs 2023 BinaryConnect BinaryNet XNOR-Net 2015 Image Classification hotdog not hotdog Text Classification 2018",
+      "page_num": 7,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page7_img1.png",
+        "session_1785119626253_0fhid/page7_img2.png",
+        "session_1785119626253_0fhid/page7_img3.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_7.png"
+    },
+    {
+      "id": "chunk_0007",
+      "text": "1-bit LLM -1 1 (Binary) 1.58-bit LLM (Ternary) -1 0 1 BitNet",
+      "page_num": 8,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page8_img1.png",
+        "session_1785119626253_0fhid/page8_img2.png",
+        "session_1785119626253_0fhid/page8_img3.png",
+        "session_1785119626253_0fhid/page8_img4.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_8.png"
+    },
+    {
+      "id": "chunk_0008",
+      "text": "2B BitNet available on HuggingFace BitNet 1.58-bit LLM (Ternary) -1 0 1",
+      "page_num": 9,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page9_img1.png",
+        "session_1785119626253_0fhid/page9_img2.png",
+        "session_1785119626253_0fhid/page9_img3.png",
+        "session_1785119626253_0fhid/page9_img4.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_9.png"
+    },
+    {
+      "id": "chunk_0009",
+      "text": "1.58-bit LLM (Ternary) -1 0 1 BitNet",
+      "page_num": 10,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page10_img1.png",
+        "session_1785119626253_0fhid/page10_img2.png",
+        "session_1785119626253_0fhid/page10_img3.png",
+        "session_1785119626253_0fhid/page10_img4.png",
+        "session_1785119626253_0fhid/page10_img5.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_10.png"
+    },
+    {
+      "id": "chunk_0010",
+      "text": "BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Embedding The cat sat on the mat",
+      "page_num": 11,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_11.png"
+    },
+    {
+      "id": "chunk_0011",
+      "text": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Feed-Forward Network (FFN) Linear Linear Non-linear Self-Attention Block Linear (Q) Linear (K) Linear (V) Linear Attention Linear x \u22c5AT activation (float16) weight matrix (float16)",
+      "page_num": 12,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page12_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_12.png"
+    },
+    {
+      "id": "chunk_0012",
+      "text": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Feed-Forward Network (FFN) Linear Linear Non-linear Self-Attention Block Linear (Q) Linear (K) Linear (V) Linear Attention BitLinear BitLinear BitLinear BitLinear BitLinear BitLinear full precision Linear x \u22c5AT activation (float16) weight matrix (float16) Bit int8 -1, 0, 1",
+      "page_num": 13,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_13.png"
+    },
+    {
+      "id": "chunk_0013",
+      "text": "BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Embedding The cat sat on the mat Embedding full precision",
+      "page_num": 14,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_14.png"
+    },
+    {
+      "id": "chunk_0014",
+      "text": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Feed-Forward Network (FFN) Linear Linear Non-linear Self-Attention Block Linear (Q) Linear (K) Linear (V) Linear Attention BitLinear BitLinear BitLinear BitLinear BitLinear BitLinear",
+      "page_num": 15,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_15.png"
+    },
+    {
+      "id": "chunk_0015",
+      "text": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Feed-Forward Network (FFN) Linear Linear Non-linear Self-Attention Block Linear (Q) Linear (K) Linear (V) Linear Attention BitLinear BitLinear BitLinear BitLinear BitLinear BitLinear (float16) x Quantization De-quantization Matrix Multiplication xq \u22c5Wq (int8) xq (int8) yq (float16) y ternary (-1, 0, 1)",
+      "page_num": 16,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_16.png"
+    },
+    {
+      "id": "chunk_0016",
+      "text": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Feed-Forward Network (FFN) Linear Linear Non-linear Self-Attention Block Linear (Q) Linear (K) Linear (V) Linear Attention BitLinear BitLinear BitLinear BitLinear BitLinear BitLinear (float16) x Quantization De-quantization Matrix Multiplication xq \u22c5WT q (int8) xq (int8) yq (float16) y LayerNorm (float16) xnorm \u03bc(xnorm) = 0 \u03c32(xnorm) = 1 xnorm = [1.73, \u22120.57, \u22120.58, \u22120.57] (misbehaved activation) x = [120, 0.01, \u22120.2, 0.0]",
+      "page_num": 17,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_17.png"
+    },
+    {
+      "id": "chunk_0017",
+      "text": "Quantization-Aware Training (QAT)",
+      "page_num": 18,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_18.png"
+    },
+    {
+      "id": "chunk_0018",
+      "text": "Training Inference x y",
+      "page_num": 19,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page19_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_19.png"
+    },
+    {
+      "id": "chunk_0019",
+      "text": "mat The cat sat on the ___ 0.321 Inference x y",
+      "page_num": 20,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page20_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_20.png"
+    },
+    {
+      "id": "chunk_0020",
+      "text": "mat The cat sat on the ___ 0.30 Inference x y",
+      "page_num": 21,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page21_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_21.png"
+    },
+    {
+      "id": "chunk_0021",
+      "text": "mat The cat sat on the ___ 0.30 Ternary weights (-1, 0, 1) Inference",
+      "page_num": 22,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page22_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_22.png"
+    },
+    {
+      "id": "chunk_0022",
+      "text": "Ternary weights (-1, 0, 1) Inference Post-Training Quantization (PTQ) Training",
+      "page_num": 23,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page23_img1.png",
+        "session_1785119626253_0fhid/page23_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_23.png"
+    },
+    {
+      "id": "chunk_0023",
+      "text": "Ternary weights (-1, 0, 1) Inference Post-Training Quantization (PTQ) Training Full precision weights (float16)",
+      "page_num": 24,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page24_img1.png",
+        "session_1785119626253_0fhid/page24_img2.png",
+        "session_1785119626253_0fhid/page24_img3.png",
+        "session_1785119626253_0fhid/page24_img4.png",
+        "session_1785119626253_0fhid/page24_img5.png",
+        "session_1785119626253_0fhid/page24_img6.png",
+        "session_1785119626253_0fhid/page24_img7.png",
+        "session_1785119626253_0fhid/page24_img8.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_24.png"
+    },
+    {
+      "id": "chunk_0024",
+      "text": "Ternary weights (-1, 0, 1) Inference Quantization-Aware Training (QAT) Training",
+      "page_num": 25,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page25_img1.png",
+        "session_1785119626253_0fhid/page25_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_25.png"
+    },
+    {
+      "id": "chunk_0025",
+      "text": "Ternary weights (-1, 0, 1) Inference Quantization-Aware Training (QAT) Training Master weights (float 16) Ternary weights (-1, 0, 1)",
+      "page_num": 26,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page26_img1.png",
+        "session_1785119626253_0fhid/page26_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_26.png"
+    },
+    {
+      "id": "chunk_0026",
+      "text": "Ternary weights (-1, 0, 1) Inference Quantization-Aware Training (QAT) Training Master weights (float 16) Ternary weights (-1, 0, 1)",
+      "page_num": 27,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page27_img1.png",
+        "session_1785119626253_0fhid/page27_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_27.png"
+    },
+    {
+      "id": "chunk_0027",
+      "text": "Embedding The cat sat on the mat BitNet during QAT Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Feed-Forward Network (FFN) Linear Linear Non-linear Self-Attention Block Linear (Q) Linear (K) Linear (V) Linear Attention BitLinear BitLinear BitLinear BitLinear BitLinear BitLinear (float16) x Quantization De-quantization Matrix Multiplication xq \u22c5WT q (int8) xq (int8) yq (float16) y LayerNorm (float16) xnorm (float16) W (Fake) Quantization quant(x) = round ( x S + Z) scale S = zero-point Z = dround(x) dx = ? Straight-Through Estimator (STE) dround(x) dx = 1 \ud83d\ude48 (Fake) Quantization",
+      "page_num": 28,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page28_img1.png",
+        "session_1785119626253_0fhid/page28_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_28.png"
+    },
+    {
+      "id": "chunk_0028",
+      "text": "Training QAT",
+      "page_num": 29,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page29_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_29.png"
+    },
+    {
+      "id": "chunk_0029",
+      "text": "Training QAT 100%",
+      "page_num": 30,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page30_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_30.png"
+    },
+    {
+      "id": "chunk_0030",
+      "text": "Training Regular pre-training",
+      "page_num": 31,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page31_img1.png",
+        "session_1785119626253_0fhid/page31_img2.png",
+        "session_1785119626253_0fhid/page31_img3.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_31.png"
+    },
+    {
+      "id": "chunk_0031",
+      "text": "Training Regular pre-training 90%",
+      "page_num": 32,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page32_img1.png",
+        "session_1785119626253_0fhid/page32_img2.png",
+        "session_1785119626253_0fhid/page32_img3.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_32.png"
+    },
+    {
+      "id": "chunk_0032",
+      "text": "Training Regular pre-training 90% QAT 10%",
+      "page_num": 33,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page33_img1.png",
+        "session_1785119626253_0fhid/page33_img2.png",
+        "session_1785119626253_0fhid/page33_img3.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_33.png"
+    }
+  ],
+  "chunks_summary": [
+    {
+      "id": "chunk_0000",
+      "page_num": 1,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_1.png",
+      "text_preview": "William Henry Gates III I don\u2019t think there\u2019s anything unique about human intelligence. All the neurons in the brain tha"
+    },
+    {
+      "id": "chunk_0001",
+      "page_num": 2,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page2_img1.png",
+        "session_1785119626253_0fhid/page2_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_2.png",
+      "text_preview": "Biological neuron 1-bit LLM 0 1 -1 1 (Binary) (Binary)"
+    },
+    {
+      "id": "chunk_0002",
+      "page_num": 3,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page3_img1.png",
+        "session_1785119626253_0fhid/page3_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_3.png",
+      "text_preview": "1.58-bit LLM (Ternary) Biological neuron 0 1 (Binary) 1-bit LLM -1 1 (Binary) -1 0 1 log2(3) = 1.58"
+    },
+    {
+      "id": "chunk_0003",
+      "page_num": 4,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page4_img1.png",
+        "session_1785119626253_0fhid/page4_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_4.png",
+      "text_preview": "Why so extreme? \u2705 faster inference \u2705 lower memory usage 16-bit weight 1-bit weight quantization"
+    },
+    {
+      "id": "chunk_0004",
+      "page_num": 5,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page5_img1.png",
+        "session_1785119626253_0fhid/page5_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_5.png",
+      "text_preview": "16-bit weight 1-bit weight quantization \u2705 faster inference \u2705 lower memory usage Why so extreme?"
+    },
+    {
+      "id": "chunk_0005",
+      "page_num": 6,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page6_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_6.png",
+      "text_preview": "\u2705 faster inference \u2705 lower memory usage Why so extreme? 9x speedup on GPU (NVIDIA A100) 6x speedup on CPU (Intel i7)"
+    },
+    {
+      "id": "chunk_0006",
+      "page_num": 7,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page7_img1.png",
+        "session_1785119626253_0fhid/page7_img2.png",
+        "session_1785119626253_0fhid/page7_img3.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_7.png",
+      "text_preview": "1-bit: the prequel BinaryBERT BiBERT TernaryBERT BitNet LLMs 2023 BinaryConnect BinaryNet XNOR-Net 2015 Image Classifica"
+    },
+    {
+      "id": "chunk_0007",
+      "page_num": 8,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page8_img1.png",
+        "session_1785119626253_0fhid/page8_img2.png",
+        "session_1785119626253_0fhid/page8_img3.png",
+        "session_1785119626253_0fhid/page8_img4.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_8.png",
+      "text_preview": "1-bit LLM -1 1 (Binary) 1.58-bit LLM (Ternary) -1 0 1 BitNet"
+    },
+    {
+      "id": "chunk_0008",
+      "page_num": 9,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page9_img1.png",
+        "session_1785119626253_0fhid/page9_img2.png",
+        "session_1785119626253_0fhid/page9_img3.png",
+        "session_1785119626253_0fhid/page9_img4.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_9.png",
+      "text_preview": "2B BitNet available on HuggingFace BitNet 1.58-bit LLM (Ternary) -1 0 1"
+    },
+    {
+      "id": "chunk_0009",
+      "page_num": 10,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page10_img1.png",
+        "session_1785119626253_0fhid/page10_img2.png",
+        "session_1785119626253_0fhid/page10_img3.png",
+        "session_1785119626253_0fhid/page10_img4.png",
+        "session_1785119626253_0fhid/page10_img5.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_10.png",
+      "text_preview": "1.58-bit LLM (Ternary) -1 0 1 BitNet"
+    },
+    {
+      "id": "chunk_0010",
+      "page_num": 11,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_11.png",
+      "text_preview": "BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Embedding Th"
+    },
+    {
+      "id": "chunk_0011",
+      "page_num": 12,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page12_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_12.png",
+      "text_preview": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026"
+    },
+    {
+      "id": "chunk_0012",
+      "page_num": 13,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_13.png",
+      "text_preview": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026"
+    },
+    {
+      "id": "chunk_0013",
+      "page_num": 14,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_14.png",
+      "text_preview": "BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transformer block N Embedding Th"
+    },
+    {
+      "id": "chunk_0014",
+      "page_num": 15,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_15.png",
+      "text_preview": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026"
+    },
+    {
+      "id": "chunk_0015",
+      "page_num": 16,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_16.png",
+      "text_preview": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026"
+    },
+    {
+      "id": "chunk_0016",
+      "page_num": 17,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_17.png",
+      "text_preview": "Embedding The cat sat on the mat BitNet Model Architecture Transformer block 1 Transformer block 2 Transformer block 3 \u2026"
+    },
+    {
+      "id": "chunk_0017",
+      "page_num": 18,
+      "chapter_title": null,
+      "image_paths": [],
+      "page_image": "session_1785119626253_0fhid/pdf_page_18.png",
+      "text_preview": "Quantization-Aware Training (QAT)"
+    },
+    {
+      "id": "chunk_0018",
+      "page_num": 19,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page19_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_19.png",
+      "text_preview": "Training Inference x y"
+    },
+    {
+      "id": "chunk_0019",
+      "page_num": 20,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page20_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_20.png",
+      "text_preview": "mat The cat sat on the ___ 0.321 Inference x y"
+    },
+    {
+      "id": "chunk_0020",
+      "page_num": 21,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page21_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_21.png",
+      "text_preview": "mat The cat sat on the ___ 0.30 Inference x y"
+    },
+    {
+      "id": "chunk_0021",
+      "page_num": 22,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page22_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_22.png",
+      "text_preview": "mat The cat sat on the ___ 0.30 Ternary weights (-1, 0, 1) Inference"
+    },
+    {
+      "id": "chunk_0022",
+      "page_num": 23,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page23_img1.png",
+        "session_1785119626253_0fhid/page23_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_23.png",
+      "text_preview": "Ternary weights (-1, 0, 1) Inference Post-Training Quantization (PTQ) Training"
+    },
+    {
+      "id": "chunk_0023",
+      "page_num": 24,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page24_img1.png",
+        "session_1785119626253_0fhid/page24_img2.png",
+        "session_1785119626253_0fhid/page24_img3.png",
+        "session_1785119626253_0fhid/page24_img4.png",
+        "session_1785119626253_0fhid/page24_img5.png",
+        "session_1785119626253_0fhid/page24_img6.png",
+        "session_1785119626253_0fhid/page24_img7.png",
+        "session_1785119626253_0fhid/page24_img8.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_24.png",
+      "text_preview": "Ternary weights (-1, 0, 1) Inference Post-Training Quantization (PTQ) Training Full precision weights (float16)"
+    },
+    {
+      "id": "chunk_0024",
+      "page_num": 25,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page25_img1.png",
+        "session_1785119626253_0fhid/page25_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_25.png",
+      "text_preview": "Ternary weights (-1, 0, 1) Inference Quantization-Aware Training (QAT) Training"
+    },
+    {
+      "id": "chunk_0025",
+      "page_num": 26,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page26_img1.png",
+        "session_1785119626253_0fhid/page26_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_26.png",
+      "text_preview": "Ternary weights (-1, 0, 1) Inference Quantization-Aware Training (QAT) Training Master weights (float 16) Ternary weight"
+    },
+    {
+      "id": "chunk_0026",
+      "page_num": 27,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page27_img1.png",
+        "session_1785119626253_0fhid/page27_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_27.png",
+      "text_preview": "Ternary weights (-1, 0, 1) Inference Quantization-Aware Training (QAT) Training Master weights (float 16) Ternary weight"
+    },
+    {
+      "id": "chunk_0027",
+      "page_num": 28,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page28_img1.png",
+        "session_1785119626253_0fhid/page28_img2.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_28.png",
+      "text_preview": "Embedding The cat sat on the mat BitNet during QAT Transformer block 1 Transformer block 2 Transformer block 3 \u2026 Transfo"
+    },
+    {
+      "id": "chunk_0028",
+      "page_num": 29,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page29_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_29.png",
+      "text_preview": "Training QAT"
+    },
+    {
+      "id": "chunk_0029",
+      "page_num": 30,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page30_img1.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_30.png",
+      "text_preview": "Training QAT 100%"
+    },
+    {
+      "id": "chunk_0030",
+      "page_num": 31,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page31_img1.png",
+        "session_1785119626253_0fhid/page31_img2.png",
+        "session_1785119626253_0fhid/page31_img3.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_31.png",
+      "text_preview": "Training Regular pre-training"
+    },
+    {
+      "id": "chunk_0031",
+      "page_num": 32,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page32_img1.png",
+        "session_1785119626253_0fhid/page32_img2.png",
+        "session_1785119626253_0fhid/page32_img3.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_32.png",
+      "text_preview": "Training Regular pre-training 90%"
+    },
+    {
+      "id": "chunk_0032",
+      "page_num": 33,
+      "chapter_title": null,
+      "image_paths": [
+        "session_1785119626253_0fhid/page33_img1.png",
+        "session_1785119626253_0fhid/page33_img2.png",
+        "session_1785119626253_0fhid/page33_img3.png"
+      ],
+      "page_image": "session_1785119626253_0fhid/pdf_page_33.png",
+      "text_preview": "Training Regular pre-training 90% QAT 10%"
+    }
+  ]
+}
