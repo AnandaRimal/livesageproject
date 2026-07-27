@@ -7,21 +7,19 @@ LiveSage is a digital workforce platform powered by AI employees and human-like 
 ![LiveSage Platform Dashboard](assets/livesage-dashboard.png)
 
 ---
+Our Initial AI Agents
 
-## 🤖 Building Human-Like AI Agents
+🔍 LiveSearch (Research Agent)
+Talk naturally with an AI research assistant that helps you explore topics, find information, explain complex concepts, and conduct research through human-like conversations. It feels like discussing ideas with a knowledgeable research partner.
 
-At **LiveSage**, we build human-like AI agents designed to seamlessly collaborate, communicate, and work alongside humans with natural real-time voice, interactive visuals, and domain expertise. 
+🏥 Health Agent
+An AI health assistant that listens to your concerns, answers health-related questions, explains medical concepts, and provides general wellness guidance in a compassionate, conversational way—similar to talking with a healthcare professional.
 
-### Initial Domain AI Agents
+📈 Finance Agent (FinVerse)
+A finance-focused AI that helps analyze markets, explain investment concepts, evaluate stocks, and answer financial questions as if you're speaking with an experienced financial expert.
 
-We have initially launched with specialized AI agents across four core domains:
-
-- 🔍 **LiveSearch (Search & Research)**: Real-time search and intelligence gathering agent providing instant answers, web research, and citation summaries.
-- 🏥 **Health Agent**: Empathetic wellness assistant delivering proactive health insights, symptom analysis, and preventative wellness guidance.
-- 📈 **Finance Agent (FinVerse)**: Intelligent market analysis agent performing real-time stock evaluation, financial forecasting, technical analysis, and portfolio tracking.
-- 🎓 **AI Tutor**: Autonomous interactive learning agent offering step-by-step explanations, document-based problem solving, and personalized tutoring.
-
----
+🎓 AI Tutor
+An AI teacher designed to make learning interactive. Simply upload a PDF, lecture slides, or a textbook, and the tutor teaches the material step by step, answers questions, and provides personalized explanations. It was initially built to support students when teachers are unavailable, with the long-term vision of making high-quality education accessible anytime.
 
 ## 🔮 Platform Vision
 
